@@ -1,0 +1,3 @@
+[run]
+source = opensupply
+omit = opensupply/test*
