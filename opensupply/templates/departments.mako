@@ -2,9 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal">
   <form>
     <table>
-    <label>Department</label><div data-dojo-type="dijit.form.TextBox"></div>
-    <div></div><div></div>
-    <div></div><div></div>
+    <label for="department_name">Department: </label> 
+    <div id='department_name' name="department_name" 
+       data-dojo-type="dijit.form.TextBox"></div> <br/>
+    <label for="department_description">Description: </label>
+    <textarea dojoType="dijit.form.SimpleTextarea" id="department_description" name="department_description" rows="5", cols="50">SimpleTextarea</textarea>
     </table>
   </form>
 </html>
