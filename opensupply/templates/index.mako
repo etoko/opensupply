@@ -29,8 +29,10 @@
       @import "static/js/dojox/layout/resources/DndGridContainer.css";
     </style>
 
+    <link rel="stylesheet" href="static/js/dijit/themes/dijit.css"/>
     <link rel="stylesheet" href="static/js/dijit/themes/claro/document.css"/>
     <link rel="stylesheet" href="static/js/dijit/tests/css/dijitTests.css"/>
+    <link rel="stylesheet" href="static/js/dijit/themes/tundra/form/Common.css"/>
 
     <script src="static/js/dojo/dojo.js" djConfig="parseOnLoad:true, isDebug: false"> </script>
     <script type="text/javascript" src="static/js/scripts/index.js"></script>
@@ -165,7 +167,7 @@
     <script type="text/javascript" src="static/js/scripts/suppliers.js"></script>
     <script type="text/javascript" src="static/js/scripts/users.js"></script>
   </head>
-  <body class=claro>
+  <body class="tundra">
     <div data-dojo-type="dijit.layout.BorderContainer" style="width: 100%; height: 100%;">
     <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" style="padding:0">
       <div data-dojo-type="dijit.Toolbar"> 
