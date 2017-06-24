@@ -166,6 +166,7 @@
 
     <script type="text/javascript" src="static/js/scripts/suppliers.js"></script>
     <script type="text/javascript" src="static/js/scripts/users.js"></script>
+    <script type="text/javascript" src="static/js/scripts/departments.js"></script>
   </head>
   <body class="tundra">
     <div data-dojo-type="dijit.layout.BorderContainer" style="width: 100%; height: 100%;">
