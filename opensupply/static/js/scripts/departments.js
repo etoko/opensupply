@@ -37,34 +37,36 @@ function newDepartment()
  *Function saves a new deparment or updates an existing department
  *
  */
-function saveDepartment()
+function department_save()
 {
-    var formToValidate = dijit.byId("Department.Form");
-
+    var formToValidate = dijit.byId("department_form");
     if (formToValidate.validate())
     {
         dojo.publish("/saving", [{message: "<font size='2'><b>Saving...", type: "info", duration: 15000}]);
 
         dojo.xhrGet(
         {
-            form: "Department.Form",
-            url: "servlets/departmentManager?operationType=save",
+            form: "department_form",
+            url: "department/save",
             load: function(response)
             {
                 dojo.publish("/saved", [{message: "<font size='2'><b>...Saved", type: "info", duration: 15000}]);
                 var department = dojo.fromJson(response);
                 populateDepartmentControls(department);
+                alert(response);
             },
             error: function(response)
             {
                 dojo.publish("/saved", [{message: "<font size='2'><b>...Failed: " + response, type: "error", duration: 15000}]);
             }
         });
+    } else { 
+        alert("Invalid form");
     }
 
 
 
-} //End of function saveDepartment
+} //End of function deepartment_save
 
 /**
  * Function navigates to the first department
