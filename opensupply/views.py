@@ -134,19 +134,19 @@ def suppliers(request):
 
 
 
-@view_config(route_name='department_controller', renderer='json')
+@view_config(route_name='department_controller', renderer='string')
 def deparments(request):
     print("=====================================")
     print(request)
     print(request.params['department_name'])
     #j_department =  request.json_body
     j_department = {'department.name': request.params['department_name'],
-        "department.id": 1,
+        "department.id": -1,
         "operation":"CREATE",
         "department.items": [],
-        "department.created_by": 1,
+        "department.created_by": "manu",
         "department.created_on": datetime.now(),
-        "department.modified_by": 1,
+        "department.modified_by": "manu",
         "department.modified_on": datetime.now()
         }
     
