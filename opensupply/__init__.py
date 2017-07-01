@@ -66,6 +66,7 @@ def main(global_config, **settings):
 
     #######controller operations###############################################
     config.add_route('supplier_controller', '/supplier/operations')
+    config.add_route('department_controller', '/department/save')
 
     ####admin###################
     config.add_route("user_controller", '/users/operations')
