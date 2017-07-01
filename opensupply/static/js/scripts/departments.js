@@ -39,15 +39,15 @@ function newDepartment()
  */
 function department_save()
 {
-    var formToValidate = dom.byId("department_form");
-    alert(formToValidate());
-    if (formToValidate.validate())
-    {
+    var formToValidate = dojo.byId("department_form");
+    //if (formToValidate.validate())
+    //{
         dojo.publish("/saving", [{message: "<font size='2'><b>Saving...", type: "info", duration: 15000}]);
 
         dojo.xhrGet(
         {
             form: "department_form",
+            handleAs: "json",
             url: "department/save",
             load: function(response)
             {
@@ -61,9 +61,9 @@ function department_save()
                 dojo.publish("/saved", [{message: "<font size='2'><b>...Failed: " + response, type: "error", duration: 15000}]);
             }
         });
-    } else { 
-        alert("Invalid form");
-    }
+    //} else { 
+      //  alert("Invalid form");
+    //}
 
 
 
