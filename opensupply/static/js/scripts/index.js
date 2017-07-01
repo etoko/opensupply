@@ -51,6 +51,8 @@ function save()
         user_save(); 
     else if (selected_tab == "Suppliers")
         supplier_save();
+    else if (selected_tab == "Departments")
+        department_save();
 }//End save function
 
 /**
@@ -102,6 +104,7 @@ function importClasses()
     dojo.require("dojox.widget.Toaster");
     dojo.require("dojox.grid.Grid");
     dojo.require("dojox.grid.DataGrid");
+    dojo.require("dojox.validate.web");
 
     dojo.require("dojox.fx.text");
 
