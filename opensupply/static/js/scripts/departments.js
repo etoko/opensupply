@@ -39,7 +39,8 @@ function newDepartment()
  */
 function department_save()
 {
-    var formToValidate = dijit.byId("department_form");
+    var formToValidate = dom.byId("department_form");
+    alert(formToValidate());
     if (formToValidate.validate())
     {
         dojo.publish("/saving", [{message: "<font size='2'><b>Saving...", type: "info", duration: 15000}]);
