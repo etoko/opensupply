@@ -136,7 +136,19 @@ def suppliers(request):
 
 @view_config(route_name='department_controller', renderer='json')
 def deparments(request):
-    j_department = request.json_body
+    print("=====================================")
+    print(request)
+    print(request.params['department_name'])
+    #j_department =  request.json_body
+    j_department = {'department.name': request.params['department_name'],
+        "department.id": 1,
+        "operation":"CREATE",
+        "department.items": [],
+        "department.created_by": 1,
+        "department.created_on": datetime.now(),
+        "department.modified_by": 1,
+        "department.modified_on": datetime.now()
+        }
     
     def _create(j_department):
         try:
@@ -150,11 +162,11 @@ def deparments(request):
     def _delete():
         pass
 
-    operation = j_supplier["department_operation"]
-    print(j_supplier["department_name"], j_department["department_id"])
+    operation = j_department["operation"]
+    print(j_department["department.name"])
 
     if operation == "CREATE":
-        if j_supplier["department_name"]:
+        if j_department["department.name"]:
             department_controller.save(j_department)
     
     return j_department
