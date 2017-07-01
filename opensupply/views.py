@@ -18,6 +18,7 @@ from sqlalchemy.exc import IntegrityError
 
 from opensupply.controllers import (
                             SupplierController, 
+                            DepartmentController,
                             UserController, 
                             PermissionController,
                             )
@@ -29,6 +30,7 @@ from opensupply.models import DBSession
 supplier_controller = SupplierController()
 user_controller = UserController()
 permission_controller = PermissionController()
+department_controller = DepartmentController()
 
 @view_config(route_name='home', renderer='index.mako')
 #@view_config(route_name='home', renderer='index.mako')
@@ -129,6 +131,35 @@ def suppliers(request):
             supplier_controller.save(j_supplier)
     
     return j_supplier
+
+
+
+@view_config(route_name='department_controller', renderer='json')
+def deparments(request):
+    j_department = request.json_body
+    
+    def _create(j_department):
+        try:
+            department_controller.add(j_department)
+        except IntegrityError:
+            print("Error saving department")
+
+    def _read():
+        pass
+
+    def _delete():
+        pass
+
+    operation = j_supplier["department_operation"]
+    print(j_supplier["department_name"], j_department["department_id"])
+
+    if operation == "CREATE":
+        if j_supplier["department_name"]:
+            department_controller.save(j_department)
+    
+    return j_department
+
+
 
 #######Admin##########################
 @view_config(route_name = "user_controller", renderer = "json")
