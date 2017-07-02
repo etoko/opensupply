@@ -105,6 +105,18 @@ function nextDepartment()
 {
     
     alert("Next Department");
+    dojo.xhrGet(
+    {
+        url: "department/next",
+        load: function(response)
+        {
+            var department = dojo.fromJson(response);
+        },
+        error: function(response)
+        {
+            alert(response);
+        }
+    });
 } //End of function nextDepartment
 
 /**
