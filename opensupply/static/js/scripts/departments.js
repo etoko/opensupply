@@ -76,7 +76,7 @@ function firstDepartment()
 {
     dojo.xhrGet(
     {
-        url: "servlets/departmentManager?operationType=first",
+        url: "department/first",
         load: function(response)
         {
             var department = dojo.fromJson(response);
@@ -95,7 +95,7 @@ function firstDepartment()
  */
 function previousDepartment()
 {
-
+    alert("Previous Department");
 } //End of function previousDepartment
 
 /**
@@ -104,6 +104,7 @@ function previousDepartment()
 function nextDepartment()
 {
     
+    alert("Next Department");
 } //End of function nextDepartment
 
 /**
@@ -138,14 +139,14 @@ function populateDepartmentControls(department)
         return;
     }
 
-    var id = dijit.byId("Department.DepartmentId");
-    var name = dijit.byId("Department.Name");
-    var type = dijit.byId("Department.Type");
-    var notes = dijit.byId("Department.Notes");
+    var id = dijit.byId("department_id");
+    var name = dijit.byId("department_name");
+    //var type = dijit.byId("department_type");
+    var notes = dijit.byId("department_notes");
 
-    id.setValue(department.departmentid);
+    id.setValue(department.id);
     name.setValue(department.name);
-    type.setValue(department.type);
+    //type.setValue(department.type);
     notes.setValue(department.notes);
 } //End of function populateDepartmentControls
 
