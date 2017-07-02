@@ -64,7 +64,9 @@ def main(global_config, **settings):
     config.add_route('goods_returned_report_page', '/goods_returned_report/')
     config.add_route("permissions", "/permissions/")
 
+    # department_actions
     config.add_route("department_first", "/department/first")
+    config.add_route("department_next", "/department/next")
 
     #######controller operations###############################################
     config.add_route('supplier_controller', '/supplier/operations')
