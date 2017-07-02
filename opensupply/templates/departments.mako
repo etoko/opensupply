@@ -3,13 +3,20 @@
   <form name="department_form", id="department_form">
     <table>
      <tr>
+       <td><label for="department_id">Department ID: </label></td>
+       <td><div id='department_id' name="department_id" 
+       data-dojo-type="dijit.form.TextBox" readOnly=True></div> </td>
+     <tr>
        <td><label for="department_name">Department: </label></td>
        <td><div id='department_name' name="department_name" 
        data-dojo-type="dijit.form.TextBox"></div> </td>
       </tr>
       <tr>
-        <td valign="top"><label for="department_description">Description: </label></td>
-        <td><textarea dojoType="dijit.form.SimpleTextarea" id="department_description" name="department_description" rows="5", cols="50"></textarea></td>
+        <td valign="top"><label for="department_notes">Description: </label></td>
+        <td><textarea dojoType="dijit.form.SimpleTextarea" id="department_notes" name="department_description" rows="5", cols="50"></textarea></td>
+      </tr>
+      <tr>
+        <td><input type="hidden" name="department_operation" id="department_operation" /></td>
       </tr>
     </table>
   </form>
