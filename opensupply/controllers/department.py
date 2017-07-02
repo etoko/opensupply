@@ -50,6 +50,14 @@ class DepartmentController(ApiController):
         department.items = self.items
         return department
 
+    def _jsonise(self, department):
+        """
+        Jsonify the sql alchemy query result. Skips attr starting with "_"
+        """
+        j_department = {"name": department.name, "id": department.id}
+        
+        return j_department
+
     def save(self, j_department):
         """
         Function creates and updates a Department instance
@@ -77,6 +85,9 @@ class DepartmentController(ApiController):
         if len(args):
             department_id = args[0] 
             return DBSession.query(Department).get(int(department_id))
+        elif kwargs:
+             if kwargs['FIRST']:
+                 return self._jsonise(DBSession.query(Department).first())
         elif not len(args) and not len(kwargs):
             return DBSession.query(Department).\
               filter(Department.voided == False).all()
@@ -100,3 +111,4 @@ class DepartmentController(ApiController):
         with transaction.manager:
             DBSession.merge(department)
             transaction.commit()
+
