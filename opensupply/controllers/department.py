@@ -54,6 +54,10 @@ class DepartmentController(ApiController):
         """
         Jsonify the sql alchemy query result. Skips attr starting with "_"
         """
+        if j_department is None:
+            #pass
+            print("None Department")
+
         j_department = {"name": department.name, "id": department.id}
         
         return j_department
@@ -84,7 +88,8 @@ class DepartmentController(ApiController):
         department_id = 0
         if len(args):
             department_id = args[0] 
-            return DBSession.query(Department).get(int(department_id))
+            return self._jsonise(DBSession.query(Department).\
+                get(int(department_id)))
         elif kwargs:
              if kwargs['FIRST']:
                  return self._jsonise(DBSession.query(Department).first())
