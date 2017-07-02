@@ -142,7 +142,7 @@ def deparments(request):
     #j_department =  request.json_body
     j_department = {'department.name': request.params['department_name'],
         "department.id": -1,
-        "operation":"CREATE",
+        "operation":request.params['department_operation'],
         "department.items": [],
         "department.created_by": "manu",
         "department.created_on": datetime.now(),
@@ -156,8 +156,11 @@ def deparments(request):
         except IntegrityError:
             print("Error saving department")
 
-    def _read():
-        pass
+    def _read(all_departments = True):
+        if all_departments:
+            return department_controller.get()
+        else:
+            return department_controller.get()[0]
 
     def _delete():
         pass
@@ -171,6 +174,27 @@ def deparments(request):
     
     return j_department
 
+@view_config(route_name="department_first", renderer="json")
+def department_first(request):
+    return department_controller.get(FIRST=True)
+
+@view_config(route_name="department_next", renderer="json")
+def department_next(request):
+    department_id = request.params["department_id"]
+    j_department = {}
+
+    #Check to see that we already have a retrieved list of departments
+    # Otherwise retrieve the list of departments
+    if department_id is not -1:
+        try:
+            j_department = department_controller.get(int(department_id) + 1)
+        except IndexError as err:
+            print("Reached end of department list")
+    else:
+        j_departments = department_controller.get()
+        j_department = j_departments[0]
+    
+    return j_department
 
 
 #######Admin##########################
