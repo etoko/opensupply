@@ -21,6 +21,8 @@ function first()
     selected_tab = which_tab();
     if (selected_tab == "Users")
         user_first();
+    else if (selected_tab == "Departments")
+        firstDepartment();
 }
 
 function previous()
@@ -28,6 +30,8 @@ function previous()
     selected_tab = which_tab();
     if (selected_tab == "Users")
         user_previous();
+    else if (selected_tab == "Departments")
+        previousDepartment();
 }
 
 function next()
@@ -35,6 +39,8 @@ function next()
     selected_tab = which_tab();
     if (selected_tab == "Users")
         user_next();
+    else if (selected_tab == "Departments")
+        nextDepartment();
 }
 
 function last()
@@ -42,6 +48,8 @@ function last()
     selected_tab = which_tab();
     if (selected_tab == "Users")
         user_last();
+    else if (selected_tab == "Departments")
+        lastDepartment();
 }
 
 function save()
