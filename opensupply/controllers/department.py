@@ -23,11 +23,11 @@ class DepartmentController(ApiController):
     def set_attributes(self, j_department):
         self.id = int(j_department.pop("department.id"))
         self.name = j_department.pop("department.name")
-        self.created_by = j_department.pop("department.created_by")
-        self.created_on = j_department.pop("department.created_on")
-        self.modified_by = j_department.pop("department.modified_by")
-        self.modified_on = j_department.pop("department.modified_on")
-        self.items = j_department.pop("department.items")
+        #self.created_by = j_department.pop("department.created_by")
+        #self.created_on = j_department.pop("department.created_on")
+        #self.modified_by = j_department.pop("department.modified_by")
+        #self.modified_on = j_department.pop("department.modified_on")
+        #self.items = j_department.pop("department.items")
 
     def _valid(j_department):
         """
@@ -43,13 +43,14 @@ class DepartmentController(ApiController):
             return False
         return False
     
-    def _set_department(self,department):
-        user = User.get_by_username(self.modified_by)
+    def _set_department(self, department):
+        #user = User.get_by_username(self.modified_by)
         department.name = self.name
-        department.created_by = user.id
-        department.modified_by = user.id
-        department.modified_on = self.modified_on
-        department.items = self.items
+        #department.created_by = user.id
+        #department.modified_by = user.id
+        #department.modified_on = self.modified_on
+        #department.items = self.items
+        
         return department
 
     def _jsonise(self, department):
@@ -69,22 +70,25 @@ class DepartmentController(ApiController):
         Function creates and updates a Department instance
         """
         self.set_attributes(dict(j_department))
+        department = self._set_department(Department(self.name))
         
-        def _create():
-            department = self._set_department(Department(self.name))
+        def _create(department):
             with transaction.manager:
                 DBSession.add(department)
-                transaction.commit()
+                department = transaction.commit()
 
-        def _update():
+        def _update(department):
             department = self.get(self.id)
-            department = self._set_department(department)
+            print("DEPARTMENT ID: " + str(self.id))
             
             with transaction.manager:
-                DBSession.merge(department)
+                department = DBSession.query(Department).get(self.id)
+                department.name = self.name
+                department = DBSession.merge(department)
                 transaction.commit()
 
-        _create() if self.id == -1 else _update() 
+        _create(department) if self.id == -1 else _update(department) 
+        return self._jsonise(department)
 
     def get(self, *args, **kwargs):
         department_id = 0
@@ -95,7 +99,8 @@ class DepartmentController(ApiController):
         elif kwargs:
              try:
                  if kwargs['FIRST']:
-                     return self._jsonise(DBSession.query(Department).first())
+                     return self._jsonise(DBSession.query(Department).order_by(\
+                         Department.id).first())
              except KeyError as err:
                  #Return last because first failed!
                  return self._jsonise(DBSession.query(Department).order_by( \
