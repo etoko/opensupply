@@ -10,27 +10,14 @@
  */
 function newDepartment()
 {
-    var id = dijit.byId("Department.DepartmentId");
-    var name = dijit.byId("Department.Name");
-    var type = dijit.byId("Department.Type");
-    var notes = dijit.byId("Department.Notes");
+    //alert("Clicked First!");
+    var id = dijit.byId("department_id");
+    var name = dijit.byId("department_name");
+    var notes = dijit.byId("department_notes");
 
-    dojo.xhrGet(
-    {
-        url: "servlets/departmentManager?operationType=add",
-        load: function(response)
-        {
-            dojo.publish("/saved", [{message: "<font size='2'><b>Enter new Department", type: "info", duration: 15000}]);
-            id.setValue("");
+    id.setValue(-1);
     name.setValue("");
-    type.setValue("");
     notes.setValue("");
-        },
-        error: function(response)
-        {
-            dojo.publish("/saved", [{message: "<font size='2'><b>...Failed: " + response, type: "error", duration: 15000}]);
-        }
-    });
 } //End of function addDepartment
 
 /**
@@ -39,26 +26,31 @@ function newDepartment()
  */
 function department_save()
 {
-    var formToValidate = dojo.byId("department_form");
+    //var formToValidate = dojo.byId("department_form");
     //if (formToValidate.validate())
     //{
-        dojo.publish("/saving", [{message: "<font size='2'><b>Saving...", type: "info", duration: 15000}]);
+        //dojo.publish("/saving", [{message: "<font size='2'><b>Saving...", type: "info", duration: 15000}]);
 
         dojo.xhrGet(
         {
             form: "department_form",
-            handleAs: "json",
+            handleAs: "text",
             url: "department/save",
             load: function(response)
             {
-                dojo.publish("/saved", [{message: "<font size='2'><b>...Saved", type: "info", duration: 15000}]);
-                var department = dojo.fromJson(response);
-                populateDepartmentControls(department);
-                alert(response);
+                //dojo.publish("/saved", [{message: "<font size='2'><b>...Saved", type: "info", duration: 15000}]);
+                //var department = dojo.fromJson(response);
+//                informationMessage("Successfully Saved");  
+                //populateDepartmentControls(department);
+    dojo.byId("InformationMessage").innerHTML = "Sucess "+ response;
+   dijit.byId("InformationMessageDialog").show();
+                
             },
             error: function(response)
             {
-                dojo.publish("/saved", [{message: "<font size='2'><b>...Failed: " + response, type: "error", duration: 15000}]);
+                //informationMessage("Message");  
+                alert("ERROR: " + response);
+                //dojo.publish("/saved", [{message: "<font size='2'><b>...Failed: " + response, type: "error", duration: 15000}]);
             }
         });
     //} else { 
@@ -68,6 +60,13 @@ function department_save()
 
 
 } //End of function deepartment_save
+
+
+//function informationMessage(message)
+//{
+//    dojo.byId("InformationMessage").innerHTML = message;
+ //   dijit.byId("InformationMessageDialog").show();
+//}
 
 /**
  * Function navigates to the first department
@@ -117,6 +116,13 @@ function previousDepartment()
  */
 function nextDepartment()
 {
+    id = dijit.byId("department_id").attr('value');
+    if (id == "")
+    {  
+        firstDepartment();
+        return;
+    }
+
     dojo.xhrGet(
     {
         form: "department_form",
@@ -157,15 +163,15 @@ function lastDepartment()
 
 function populateDepartmentControls(department)
 {
-    var departmentName = department.name;
+    //var departmentName = department.name;
 
-    if (departmentName.toString() == "none")
-    {
-        dojo.byId("InformationMessage").innerHTML = "There are no departments";
-        dijit.byId("InformationMessageDialog").show();
+    //if (departmentName.toString() == "none")
+    //{
+    //    dojo.byId("InformationMessage").innerHTML = "There are no departments";
+    //    dijit.byId("InformationMessageDialog").show();
         
-        return;
-    }
+    //    return;
+    //}
 
     var id = dijit.byId("department_id");
     var name = dijit.byId("department_name");
