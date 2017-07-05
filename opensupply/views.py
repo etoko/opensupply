@@ -40,6 +40,10 @@ def index(request):
     return {'app_name':'Inventory Management System', "user":userid}
 
 
+
+####TODO MOVE FUNCTIONS HANDLING SOME MODEL TO INDEPENT FILES UNDER NEW VIEWS
+#DIRECTORY
+
 ################Authorisation Section#################################
 
 @view_config(route_name = "login", renderer = "login.mako")
@@ -189,6 +193,7 @@ def department_next(request):
         try:
             j_department = department_controller.get(int(department_id) + 1)
         except IndexError as err:
+            #TODO more error handling here
             print("Reached end of department list")
     else:
         j_departments = department_controller.get()
@@ -196,6 +201,27 @@ def department_next(request):
     
     return j_department
 
+
+@view_config(route_name="department_previous", renderer="json")
+def department_previous(request):
+    """
+    Function navigates to the previous department
+    """
+    department_id = request.params["department_id"]
+    j_department = {}
+    
+    if department_id is not -1:
+        try:
+            j_department = department_controller.get(int(department_id) - 1)
+        except IndexError as err:
+            #TODO more error handling here
+            print("Reached top of department list")
+
+    return j_department
+
+@view_config(route_name="department_last", renderer="json")
+def department_last(request):
+    return department_controller.get(LAST=True)
 
 #######Admin##########################
 @view_config(route_name = "user_controller", renderer = "json")
