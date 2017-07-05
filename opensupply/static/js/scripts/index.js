@@ -16,6 +16,17 @@ function which_tab()
     return title;
 }
 
+
+
+function newValue()
+{
+    selected_tab = which_tab();
+    if (selected_tab == "Users")
+        newUser();
+    else if (selected_tab == "Departments")
+        newDepartment();
+}
+
 function first()
 {
     selected_tab = which_tab();
@@ -713,5 +724,12 @@ function changeOfParameters(action)
 function noResultsToDisplay(type, action)
 {
     dojo.byId("InformationMessage").innerHTML= "No " + type + " to " + action;
+    dijit.byId("InformationMessageDialog").show();
+}
+
+
+function informationMessage(message)
+{
+    message.innerHTML = "message";
     dijit.byId("InformationMessageDialog").show();
 }
