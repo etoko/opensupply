@@ -95,7 +95,21 @@ function firstDepartment()
  */
 function previousDepartment()
 {
-    alert("Previous Department");
+    dojo.xhrGet(
+    {
+        form: "department_form",
+        url: "department/previous",
+        //handleAs: "json",
+        load: function(response)
+        {
+            var department = dojo.fromJson(response);
+            populateDepartmentControls(department);
+        },
+        error: function(response)
+        {
+            alert(response);
+        }
+    });
 } //End of function previousDepartment
 
 /**
@@ -103,14 +117,15 @@ function previousDepartment()
  */
 function nextDepartment()
 {
-    
-    alert("Next Department");
     dojo.xhrGet(
     {
+        form: "department_form",
         url: "department/next",
+        //handleAs: "json",
         load: function(response)
         {
             var department = dojo.fromJson(response);
+            populateDepartmentControls(department);
         },
         error: function(response)
         {
@@ -126,7 +141,8 @@ function lastDepartment()
 {
     dojo.xhrGet(
     {
-        url: "servlets/departmentManager?operationType=last",
+        form: "department_form",
+        url: "department/last",
         load: function(response)
         {
             var department = dojo.fromJson(response);
