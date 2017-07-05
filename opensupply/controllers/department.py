@@ -1,6 +1,8 @@
 
 import transaction
 
+from sqlalchemy import desc
+
 from opensupply.models import DBSession, Department
 from opensupply.controllers import ApiController
 from opensupply.models import User
@@ -54,7 +56,7 @@ class DepartmentController(ApiController):
         """
         Jsonify the sql alchemy query result. Skips attr starting with "_"
         """
-        if j_department is None:
+        if department is None:
             #pass
             print("None Department")
 
@@ -91,8 +93,13 @@ class DepartmentController(ApiController):
             return self._jsonise(DBSession.query(Department).\
                 get(int(department_id)))
         elif kwargs:
-             if kwargs['FIRST']:
-                 return self._jsonise(DBSession.query(Department).first())
+             try:
+                 if kwargs['FIRST']:
+                     return self._jsonise(DBSession.query(Department).first())
+             except KeyError as err:
+                 #Return last because first failed!
+                 return self._jsonise(DBSession.query(Department).order_by( \
+                     desc(Department.id)).first())
         elif not len(args) and not len(kwargs):
             return DBSession.query(Department).\
               filter(Department.voided == False).all()
