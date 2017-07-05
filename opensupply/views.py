@@ -145,7 +145,7 @@ def deparments(request):
     print(request.params['department_name'])
     #j_department =  request.json_body
     j_department = {'department.name': request.params['department_name'],
-        "department.id": -1,
+        "department.id": request.params['department_id'],
         "operation":request.params['department_operation'],
         "department.items": [],
         "department.created_by": "manu",
@@ -169,12 +169,14 @@ def deparments(request):
     def _delete():
         pass
 
-    operation = j_department["operation"]
-    print(j_department["department.name"])
+    j_department = department_controller.save(j_department)
 
-    if operation == "CREATE":
-        if j_department["department.name"]:
-            department_controller.save(j_department)
+    #operation = j_department["operation"]
+    #print(j_department["department.name"])
+
+    #if operation == "CREATE":
+    #    if j_department["department.name"]:
+    #        department_controller.save(j_department)
     
     return j_department
 
