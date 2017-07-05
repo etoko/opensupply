@@ -66,7 +66,9 @@ def main(global_config, **settings):
 
     # department_actions
     config.add_route("department_first", "/department/first")
+    config.add_route("department_previous", "/department/previous")
     config.add_route("department_next", "/department/next")
+    config.add_route("department_last", "/department/last")
 
     #######controller operations###############################################
     config.add_route('supplier_controller', '/supplier/operations')
