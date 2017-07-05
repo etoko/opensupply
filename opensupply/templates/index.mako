@@ -172,7 +172,7 @@
     <div data-dojo-type="dijit.layout.BorderContainer" style="width: 100%; height: 100%;">
     <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" style="padding:0">
       <div data-dojo-type="dijit.Toolbar"> 
-        <button data-dojo-type="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconCopy" showLabel="true"> New </button>
+        <button data-dojo-type="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconCopy" showLabel="true" onClick="newValue()"> New </button>
         <button dojoType="dijit.form.Button" id="_update" onclick="save()" iconClass="dijitEditorIcon dijitEditorIconSave" showLabel="true"> Save </button>
         <button dojoType="dijit.form.Button"> <img src="static/images/drive-harddisk.png" />
           Save To File
@@ -469,7 +469,7 @@ Cancel
       <table align="center" cellspacing="5">
            <tr align="center">
                <td valign="middle" style="width:3em">
-                   <img src="resources/images/info.png">
+                   <img src="static/images/info.png">
                </td>
                <td align="center">
                    <div id="InformationMessage"></div>
