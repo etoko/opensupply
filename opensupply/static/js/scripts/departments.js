@@ -94,6 +94,13 @@ function firstDepartment()
  */
 function previousDepartment()
 {
+    id = dijit.byId("department_id").attr('value');
+    if (id == "")
+    {  
+        firstDepartment();
+        return;
+    }
+
     dojo.xhrGet(
     {
         form: "department_form",
