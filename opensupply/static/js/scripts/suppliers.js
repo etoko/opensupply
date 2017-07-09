@@ -36,8 +36,9 @@ function newSupplier()
 /**
 * function persists or mergers an entity
 */
-function supplier_save()
+function saveSupplier()
 {
+    alert("Clicked Me!");
 
 //    if (supplier.toString().length < 1)
 //    {
@@ -56,7 +57,7 @@ function supplier_save()
         status_message_display("busy", "Creating Supplier...")
         dojo.xhrPost(
         {
-            url: "/supplier/operations",
+            url: "/supplier/create",
             //form: "supplier.form" ,
             putData: dojo.formToJson("supplier_form"),
             handleAs: "json",
