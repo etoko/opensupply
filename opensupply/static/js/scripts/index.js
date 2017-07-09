@@ -79,7 +79,7 @@ function save()
     if (selected_tab == "Users")
         user_save(); 
     else if (selected_tab == "Suppliers")
-        supplier_save();
+        saveSupplier();
     else if (selected_tab == "Departments")
         department_save();
 }//End save function
