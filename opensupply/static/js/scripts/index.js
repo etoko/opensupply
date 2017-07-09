@@ -25,6 +25,8 @@ function newValue()
         newUser();
     else if (selected_tab == "Departments")
         newDepartment();
+    else if (selected_tab == "Suppliers")
+        newSupplier();
 }
 
 function first()
@@ -34,6 +36,8 @@ function first()
         user_first();
     else if (selected_tab == "Departments")
         firstDepartment();
+    else if (selected_tab == "Suppliers")
+        firstSupplier();
 }
 
 function previous()
@@ -43,6 +47,8 @@ function previous()
         user_previous();
     else if (selected_tab == "Departments")
         previousDepartment();
+    else if (selected_tab == "Suppliers")
+        previousSupplier();
 }
 
 function next()
@@ -52,6 +58,8 @@ function next()
         user_next();
     else if (selected_tab == "Departments")
         nextDepartment();
+    else if (selected_tab == "Suppliers")
+        nextSupplier();
 }
 
 function last()
@@ -61,6 +69,8 @@ function last()
         user_last();
     else if (selected_tab == "Departments")
         lastDepartment();
+    else if (selected_tab == "Suppliers")
+        lastSupplier();
 }
 
 function save()
