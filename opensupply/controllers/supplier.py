@@ -25,16 +25,16 @@ class SupplierController(ApiController):
         supplier_name_key = "supplier_name"
         user_controller = UserController()
 
-    def _to_dict(supplier):
+    def _to_dict(self, supplier):
         j_supplier = {
-            "supplier_id": supplier.id,
-            "supplier_name": supplier.name,
-            "supplier_tel_1": supplier.tel_1,
-            "supplier_tel_2": supplier.tel_2,
-            "supplier_email": supplier.email,
-            "supplier_fax": supplier.fax,
-            "supplier_address": supplier.address,
-            "supplier_notes": supplier.notes
+            "id": supplier.id,
+            "name": supplier.name,
+            "tel_1": supplier.tel_1,
+            "tel_2": supplier.tel_2,
+            "email": supplier.email,
+            "fax": supplier.fax,
+            "address": supplier.address,
+            "notes": supplier.notes
         }
         
         return j_supplier
@@ -111,7 +111,7 @@ class SupplierController(ApiController):
             """
             supplier = DBSession.query(Supplier).order_by(Supplier.id).first()
             
-            return _to_json(supplier)
+            return self._to_dict(supplier)
 
 
         def _last():
