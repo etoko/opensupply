@@ -38,29 +38,12 @@ function newSupplier()
 */
 function saveSupplier()
 {
-    alert("Clicked Me!");
-
-//    if (supplier.toString().length < 1)
-//    {
-//        var message = dojo.byId("InformationMessage");
-//        message.innerHTML = "Ensure that you are saving a viewable supplier";
-//        dijit.byId("InformationMessageDialog").show();
-//
-//        return;
-//    }
-
-    if (dijit.byId("supplier_form" ).validate())
-    {
-        var supplier = dijit.byId("supplier_name").getValue();
-        var supplierId = dojo.byId("supplier_id").value;
-        dojo.byId("supplier_operation").value = "CREATE";
-        status_message_display("busy", "Creating Supplier...")
         dojo.xhrPost(
         {
-            url: "/supplier/create",
-            //form: "supplier.form" ,
-            putData: dojo.formToJson("supplier_form"),
-            handleAs: "json",
+            url: "/supplier/save",
+            form: "supplier_form" ,
+            //putData: dojo.formToJson("supplier_form"),
+            //handleAs: "json",
             load: function(response)
             {
                 alert(dojo.byId("supplier_operation").value);
@@ -72,14 +55,6 @@ function saveSupplier()
                 dojo.publish("/saved",[{message: "<font size='2'><b>...Failed", type: "error", duration: 5000}]);
             }
         });
-    }
-
-    var flag = dojo.cookie("newSupplier");
-    
-    if (flag == "true")
-    {
-        dojo.cookie("newSupplier", "false", {expires: 5});
-    }
 }
 
 /**
