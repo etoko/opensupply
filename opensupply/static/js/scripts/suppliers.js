@@ -349,15 +349,14 @@ function suppliersPrint()
  */
 function populateSupplierControls(supplier)
 {
-    alert(dijit.byId("supplier_id"));
-//    var supplier_id = dijit.byId("supplier_id");
-//    var supplier_name = dijit.byId("supplier_name");
-//    var supplier_te1_1 = dijit.byId("supplier_tel_1");
-//    var supplier_te1_2 = dijit.byId("supplier_tel_2");
-//    var supplier_fax = dijit.byId("supplier_fax");
-//    var supplier_email = dijit.byId("supplier_email");
-//    var supplier_address = dijit.byId("supplier_address");
-//    var supplier_notes = dijit.byId("supplier_notes");
+    var supplier_id = dijit.byId("supplier_id");
+    var supplier_name = dijit.byId("supplier_name");
+    var supplier_te1_1 = dijit.byId("supplier_tel_1");
+    var supplier_te1_2 = dijit.byId("supplier_tel_2");
+    var supplier_fax = dijit.byId("supplier_fax");
+    var supplier_email = dijit.byId("supplier_email");
+    var supplier_address = dijit.byId("supplier_address");
+    var supplier_notes = dijit.byId("supplier_notes");
 
   //  if ((supplier_id.getValue().toString() == "0")
   //  {
@@ -367,17 +366,14 @@ function populateSupplierControls(supplier)
 
   //      return;
   //  }
-
-
- //   supplier_id.setValue(supplier.id);
- //   supplier_name.setValue(supplier.name);
-  //  supplier_tel_1.setValue(supplier.tel_1);
-  //  supplier_tel_2.setValue(supplier.tel_2);
-  ///  supplier_fax.setValue(supplier.fax);
-  //  supplier_email.value(supplier.email);
-  //  supplier_address.setValue(supplier.address);
-   // supplier_notes.setValue(supplier.notes)
-
+    supplier_id.set("value", supplier);
+    supplier_name.set("value", supplier);
+    supplier_tel_1.set("value", supplier);
+    supplier_tel_2.set("value", supplier);
+    supplier_fax.set("value", supplier);
+    supplier_email.set("value", supplier);
+    supplier_address.set("value", supplier);
+    supplier_notes.set("value", supplier)
 
 //    var bank = supplier.bank;
 
