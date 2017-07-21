@@ -73,7 +73,7 @@ def main(global_config, **settings):
 
 
     #SUPPLIERS
-    config.add_route("supplier_create", "/supplier/create")
+    config.add_route("supplier_save", "/supplier/save")
     config.add_route("supplier_first", "/supplier/first")
 
     #######controller operations###############################################

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-__author__ = "Emmanuel Toko <http://emmanueltoko.blogspot.com>"
+__author__ = "Emmanuel Toko <http://emmanueltoko.blogspot.com><github.com/etoko>"
 #date 2012-03-02
 
 import os
@@ -25,34 +25,75 @@ class SupplierController(ApiController):
         supplier_name_key = "supplier_name"
         user_controller = UserController()
 
+    def _to_dict(supplier):
+        j_supplier = {
+            "supplier_id": supplier.id,
+            "supplier_name": supplier.name,
+            "supplier_tel_1": supplier.tel_1,
+            "supplier_tel_2": supplier.tel_2,
+            "supplier_email": supplier.email,
+            "supplier_fax": supplier.fax,
+            "supplier_address": supplier.address,
+            "supplier_notes": supplier.notes
+        }
+        
+        return j_supplier
+
+    def _validate(j_supplier):
+        """
+        Check the validity of a Supplier instance returning true 
+        if valid, otherwise false. Throws a KeyError
+        """
+        supplier_id = None
+        supplier_name = None
+        
+        try:
+            supplier_id = j_supplier[supplier_id_key]
+        except KeyError:
+            raise KeyError("supplier Id not submitted")
+        try:
+            supplier_name = j_supplier[supplier_name_key]
+        except KeyError:
+            raise KeyError("No supplier name entered")
+    
+        return True if supplier_name and supplier_id else False
+    
     def save(self, j_supplier):
         """
         Place a Supplier in the Session.
         Its state will be persisted to the database on the next flush operation.
         """
-        if not _validate(j_supplier):
-            raise ValueError("Invalid supplier")
+        #if not _validate(j_supplier):
+        #    raise ValueError("Invalid supplier")
     
-        supplier_id = j_supplier[supplier_id_key]
-        name = j_supplier[supplier_name_key]
-        username = j_supplier["supplier_username"]
-        user = user_controller.get(username = username)[0]
+        supplier_id = j_supplier['supplier_id']
+        name = j_supplier['supplier_name']
+        username = None #j_supplier["supplier_username"]
+        user = None #user_controller.get(username = username)[0]
         supplier = Supplier(name)
-    
+        supplier.tel_1 = j_supplier["supplier_tel_1"]
+        supplier.tel_2 = j_supplier["supplier_tel_2"]
+        supplier.fax = j_supplier["supplier_fax"]
+        supplier.email = j_supplier["supplier_email"]
+        supplier.address = j_supplier["supplier_address"]
+        supplier.notes = j_supplier["supplier_notes"]
+        
         def _create():
             with transaction.manager:
-                supplier.created_by = user.id
-                supplier.modified_by = user.id
+                supplier.created_by = user
+                supplier.modified_by = user
                 DBSession.add(supplier)
-                region_invalidate(_all, "hour")
+                #region_invalidate(_all, "hour")
       
         def _update():
             with transaction.manager:
-                supplier.modified_by = user.id
+                supplier.modified_by = user #user.id
                 DBSession.merge(supplier)
-                region_invalidate(_add)
+                #region_invalidate(_add)
+
+        _update() if not supplier_id == -1 else _create()
     
-    def get(self, **kwargs):
+    def get(self, *args, **kwargs):
         """
         Copy the state an instance onto the persistent instance with the same 
         identifier.
@@ -62,20 +103,24 @@ class SupplierController(ApiController):
         persistent instance. The given instance does not become associated 
         with the session.
         """
-        supplier_id = kwargs.pop(self.supplier_id_key, None)
-        supplier_name = kwargs.pop(self.supplier_name_key, None)
-        suppliers = None
-        if supplier_id and not supplier_name:
-            try:
-                supplier_id = int(supplier_id)
-            except TypeError:
-                raise TypeError("Invalid Supplier Id submitted")
-            return self._all()
-        elif supplier_name:
-            return DBSession.query(Supplier). \
-                   filter(Supplier.name.like('%' + supplier_name + '%')).all()
-        elif not supplier_id and not supplier_name:
-            return self._all()
+
+        
+        def _first():
+            """
+            internal method to navigate to the first supplier
+            """
+            supplier = DBSession.query(Supplier).order_by(Supplier.id).first()
+            
+            return _to_json(supplier)
+
+
+        def _last():
+            pass #TODO implement navigation to last supplier
+
+        
+        if kwargs['FIRST']:
+             return _first()
+        
         return None
     
     @cache_region("hour", "suppliers")
@@ -98,25 +143,6 @@ class SupplierController(ApiController):
             with transaction.manager:
                 DBSession.delete(supplier)
                 return True
-    
-    def _validate(j_supplier):
-        """
-        Check the validity of a Supplier instance returning true 
-        if valid, otherwise false. Throws a KeyError
-        """
-        supplier_id = None
-        supplier_name = None
-        
-        try:
-            supplier_id = j_supplier[supplier_id_key]
-        except KeyError:
-            raise KeyError("supplier Id not submitted")
-        try:
-            supplier_name = j_supplier[supplier_name_key]
-        except KeyError:
-            raise KeyError("No supplier name entered")
-    
-        return True if supplier_name and supplier_id else False
     
     def save_branch(self, j_branch):
         """

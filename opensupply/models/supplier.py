@@ -32,11 +32,12 @@ class Supplier(Base):
 
     id = Column("id", Integer, Sequence("supplier_id_seq"), primary_key = True)
     name = Column("name", String)
-    street_address = Column("street_address", String)
+    address = Column("address", String)
     tel_1 = Column("tel_1", String(20))
     tel_2 = Column("tel_2", String(20))
     email = Column("email", String, nullable = True)
     website = Column(String(30), nullable = True)
+    notes = Column("notes", String(200), nullable = True)
     created_by = Column(Integer, ForeignKey("users.id"), nullable = True)
     created_on = Column(DateTime, default = datetime.now())
     modified_by = Column(Integer, ForeignKey("users.id"), nullable = True)

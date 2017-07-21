@@ -4,30 +4,20 @@
  **/
 function newSupplier()
 {
-    var supplierId = dojo.byId("Supplier.Id");
-    var suppliername = dojo.byId("supplierName");
-    var supplierContact = dojo.byId("supplierContact");
-    var supplierDate = dojo.byId("supplierDate");
-    var supplierTelephoneNumber = dojo.byId("supplierTelephoneNumber");
-    var supplierFaxNumber = dojo.byId("supplierFaxNumber");
-    var supplierEmail = dojo.byId("supplierEmailAddress");
-    var supplierAddress = dojo.byId("supplierAddress");
-    var supplierCity = dojo.byId("supplierCity");
-    var supplierCountry = dojo.byId("supplierCountry");
+    var supplier_id = dojo.byId("supplier_id");
+    var supplier_name = dojo.byId("supplier_name");
+    var supplier_te1_1 = dojo.byId("supplier_tel_1");
+    var supplier_te1_2 = dojo.byId("supplier_tel_2");
+    var supplier_fax = dojo.byId("supplier_fax");
+    var supplier_email = dojo.byId("supplier_email");
+    var supplier_address = dojo.byId("supplier_address");
+    var supplier_notes = dojo.byId("supplier_notes");
 
-    supplierId.value = 0;
-    suppliername.value = "";
-    supplierContact.value = "";
-    supplierDate.value = "";
-    supplierTelephoneNumber.value = "";
-    supplierFaxNumber.value = "";
-    supplierEmail.value = "";
-    supplierAddress.value = "";
-    supplierCity.value = "";
-    supplierCountry.value = "";
-    dojo.byId("Suppliers.BankInfo").innerHTML = "";
-    dojo.byId("Suppliers.BankingInfoId").innerHTML = 0;
-    dojo.byId("Suppliers.BankingButton").innerHTML = "";
+    supplier_id.value = -1;
+    supplier_name.value = "";
+    supplier_fax.value = "";
+    supplier_email.value = "";
+    supplier_address.value = "";
     
     dojo.publish("/saving", [{message: "<font size='2'><b>Enter new Supplier",
         type: "info", duration: 15000}]);
@@ -66,13 +56,13 @@ function firstSupplier()
     //The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
     dojo.xhrGet(
     {
-        url: "servlets/supplierManager?operationType=first",
+        url: "/supplier/first",
         handleAs: "text",
         load: function(response)
         {
             var supplier = dojo.fromJson(response);
             
-            populateSupplierControls(supplier, 0);
+            populateSupplierControls(supplier);
         },
         error: function(response)
         {
@@ -359,21 +349,15 @@ function suppliersPrint()
  */
 function populateSupplierControls(supplier, position)
 {
-    var supplierId = dojo.byId("Supplier.Id");
-    var suppliername = dojo.byId("supplierName");
-    var supplierContact = dojo.byId("supplierContact");
-    var supplierDate = dojo.byId("supplierDate");
-    var supplierTelephoneNumber = dojo.byId("supplierTelephoneNumber");
-    var supplierFaxNumber = dojo.byId("supplierFaxNumber");
-    var supplierEmail = dojo.byId("supplierEmailAddress");
-    var supplierAddress = dojo.byId("supplierAddress");
-    var supplierCity = dojo.byId("supplierCity");
-    var supplierCountry = dojo.byId("supplierCountry");
-    var navigator = dojo.byId("suppliersNavigator");
-    var bankInfo = dojo.byId("Suppliers.BankInfo");
-    var bankInfoId = dojo.byId("Suppliers.BankingInfoId");
-    var bankingButton = dojo.byId("Suppliers.BankingButton");
-    var bankingB = dijit.byId("bak");
+
+    var supplier_id = dijit.byId("supplier_id");
+    var supplier_name = dijit.byId("supplier_name");
+    var supplier_te1_1 = dijit.byId("supplier_tel_1");
+    var supplier_te1_2 = dijit.byId("supplier_tel_2");
+    var supplier_fax = dijit.byId("supplier_fax");
+    var supplier_email = dijit.byId("supplier_email");
+    var supplier_address = dijit.byId("supplier_address");
+    var supplier_notes = dijit.byId("supplier_notes");
 
     if ((supplier.supplierId).toString() == "0")
     {
@@ -384,69 +368,68 @@ function populateSupplierControls(supplier, position)
         return;
     }
 
-    supplierId.value = supplier.supplierId;
-    suppliername.value = supplier.name;
-    supplierContact.value = supplier.contact;
-    supplierDate.value = supplier.supplierdate;
-    supplierEmail.value = supplier.email;
-    supplierTelephoneNumber.value = supplier.tel;
-    supplierFaxNumber.value = supplier.fax;
-    supplierAddress.value = supplier.address;
-    supplierCity.value = supplier.city;
-    supplierCountry.value = supplier.country;
+    supplier_id.setValue(supplier.id);
+    supplier_name.setValue(supplier.name);
+    supplier_tel_1.setValue(supplier.tel_1);
+    supplier_tel_2.setValue(supplier.tel_2);
+    supplier_fax.setValue(supplier.fax);
+    supplier_email.value(supplier.email);
+    supplier_address.setValue(supplier.address);
+    supplier_notes.setValue(supplier.notes)
 
-    var bank = supplier.bank;
 
-    if (bank.toString() !== "NaN")
-    {
-        bankingB.hidden = true;
+//    var bank = supplier.bank;
+
+  //  if (bank.toString() !== "NaN")
+//    {
+//        bankingB.hidden = true;
         
 
-        bankInfoId.innerHTML = supplier.bankingInfoId;
+//        bankInfoId.innerHTML = supplier.bankingInfoId;
 
-        var branch = supplier.branch;
-        var accountId = supplier.accountId;
-        var accountName = supplier.accountName;
+//        var branch = supplier.branch;
+//        var accountId = supplier.accountId;
+//        var accountName = supplier.accountName;
 
-        var banking = "<table cellspacing='5' border='0' width=\"100%\">" +
-            "<tr><td colspan='2' style='border-bottom: 1px solid silver;'><h1>Banking Info </h1></td></tr>" +
-            "<tr><td style=\"width: 22%\"><b>Bank:</b></td><td><span id='Supplier.BankValue'>" + bank + "</span></td></tr>" +
-            "<tr><td><b>Branch:</b></td><td><span id='Supplier.BranchValue'>" + branch + "</span></td></tr>" +
-            "<tr><td><b>Account #:</b></td><td><span id='Supplier.AccountIdValue'>" + accountId + "</span></td></tr>" +
-            "<tr><td><b>Account Name:</b></td><td><span id='Supplier.AccountNameValue'>" + accountName + "</span></td></tr>";
+//        var banking = "<table cellspacing='5' border='0' width=\"100%\">" +
+//            "<tr><td colspan='2' style='border-bottom: 1px solid silver;'><h1>Banking Info </h1></td></tr>" +
+//            "<tr><td style=\"width: 22%\"><b>Bank:</b></td><td><span id='Supplier.BankValue'>" + bank + "</span></td></tr>" +
+//            "<tr><td><b>Branch:</b></td><td><span id='Supplier.BranchValue'>" + branch + "</span></td></tr>" +
+//            "<tr><td><b>Account #:</b></td><td><span id='Supplier.AccountIdValue'>" + accountId + "</span></td></tr>" +
+//            "<tr><td><b>Account Name:</b></td><td><span id='Supplier.AccountNameValue'>" + accountName + "</span></td></tr>";
+//
+//        bankInfo.innerHTML = banking;
+//        bankingButton.innerHTML =
+//            "<a href='javascript:showAccountDialog(true)'>" +
+//                "<img src='resources/images/floppy.png' height='18'/> Update Bank Info" +
+//            "</a>" + " &nbsp;&nbsp;&nbsp;" +
+//            "<a href='javascript:deleteSupplierBankInfo(true)'>" +
+//                "<img src='resources/images/cancel.png' /> Delete Bank Info" +
+//            "</a>";
+//    }
+//    else
+//    {
+//        bankingB.hidden = false;
+//        
+//        bankInfo.innerHTML = "";
+//        bankingButton.innerHTML =
+//            "<a href='javascript:showAccountDialog(false)'>" +
+//                "<img src='resources/images/list-add.png'/> Add Bank Info" +
+//            "</a>"
+//    }
 
-        bankInfo.innerHTML = banking;
-        bankingButton.innerHTML =
-            "<a href='javascript:showAccountDialog(true)'>" +
-                "<img src='resources/images/floppy.png' height='18'/> Update Bank Info" +
-            "</a>" + " &nbsp;&nbsp;&nbsp;" +
-            "<a href='javascript:deleteSupplierBankInfo(true)'>" +
-                "<img src='resources/images/cancel.png' /> Delete Bank Info" +
-            "</a>";
-    }
-    else
-    {
-        bankingB.hidden = false;
-        
-        bankInfo.innerHTML = "";
-        bankingButton.innerHTML =
-            "<a href='javascript:showAccountDialog(false)'>" +
-                "<img src='resources/images/list-add.png'/> Add Bank Info" +
-            "</a>"
-    }
+//    var size = supplier.size;
 
-    var size = supplier.size;
-
-    dojo.cookie("SupplierNumber", size, {expires: 5});
-    dojo.cookie("CurrentSupplier", position, {expires: 5});
+//    dojo.cookie("SupplierNumber", size, {expires: 5});
+//    dojo.cookie("CurrentSupplier", position, {expires: 5});
     
-    position = Math.abs(position);
-    position = position + 1;
-    size = Math.abs(size);
+//    position = Math.abs(position);
+//    position = position + 1;
+//    size = Math.abs(size);
 
-    if (position > size)
-        position = size;
+//    if (position > size)
+//        position = size;
     
-    navigator.innerHTML = position + " of " + size;
+//    navigator.innerHTML = position + " of " + size;
 } //End of function populateSupplierControls
 
