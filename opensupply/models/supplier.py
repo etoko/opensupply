@@ -36,6 +36,7 @@ class Supplier(Base):
     tel_1 = Column("tel_1", String(20))
     tel_2 = Column("tel_2", String(20))
     email = Column("email", String, nullable = True)
+    fax = Column("fax", String, nullable = True)
     website = Column(String(30), nullable = True)
     notes = Column("notes", String(200), nullable = True)
     created_by = Column(Integer, ForeignKey("users.id"), nullable = True)
