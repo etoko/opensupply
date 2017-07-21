@@ -15,19 +15,21 @@
              <td><div id='supplier_name' name="supplier_name"  style="width: 100%"
        data-dojo-type="dijit.form.TextBox"></div> </td>
            </tr>
+           <tr>
 
+                 <td><label for="supplier_email">Email:</label></td>
+                 <td><div id="supplier_email" name="supplier_email" data-dojo-type="dijit.form.TextBox" style="width: 100%"></div></td>
+           </tr>
            <tr>
              <td colspan=4>
               <table border=0>
                   <tr>
-                     <td width="14%"><label>Tel 1:</label></td>
+                     <td width="14%"><label for="supplier_tel_1">Tel 1:</label></td>
                      <td><div id="supplier_tel_1" name="supplier_tel_1"  data-dojo-type="dijit.form.TextBox"></div></td>
-                     <td><label>Tel 2:</label></td>
+                     <td><label for="supplier_tel_2">Tel 2:</label></td>
                      <td><div id="supplier_tel_2" name="supplier_tel_2" data-dojo-type="dijit.form.TextBox"></div></td>
                   </tr>
                <tr>
-                 <td width="14%"><label>Email:</label></td>
-                 <td><div id="supplier_email" name="supplier_email" data-dojo-type="dijit.form.TextBox"></div></td>
                  <td><label>Fax:</label></td>
                  <td><div id="supplier_fax" name="supplier_fax" data-dojo-type="dijit.form.TextBox"></div></td>
              </tr>
@@ -35,12 +37,12 @@
         </td>
       </tr>
       <tr>
-        <td valign="top"><label for="supplier_street_address">Address: </label></td>
-        <td><textarea dojoType="dijit.form.SimpleTextarea" id="supplier_street_address" name="supplier_address" rows="3" cols="90"></textarea></td>
+        <td valign="top"><label for="supplier_address">Address: </label></td>
+        <td><textarea dojoType="dijit.form.SimpleTextarea" id="supplier_address" name="supplier_address" rows="3" cols="90"></textarea></td>
       </tr>
 
       <tr>
-        <td valign="top"><label for="supplier_notes">Description: </label></td>
+        <td valign="top"><label for="supplier_notes">Notes: </label></td>
         <td><textarea dojoType="dijit.form.SimpleTextarea" id="supplier_notes" name="supplier_notes" rows="5" cols="90"></textarea></td>
       </tr>
 
