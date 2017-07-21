@@ -53,7 +53,7 @@ class DepartmentController(ApiController):
         
         return department
 
-    def _jsonise(self, department):
+    def _to_json(self, department):
         """
         Jsonify the sql alchemy query result. Skips attr starting with "_"
         """
@@ -88,22 +88,22 @@ class DepartmentController(ApiController):
                 transaction.commit()
 
         _create(department) if self.id == -1 else _update(department) 
-        return self._jsonise(department)
+        return self._to_json(department)
 
     def get(self, *args, **kwargs):
         department_id = 0
         if len(args):
             department_id = args[0] 
-            return self._jsonise(DBSession.query(Department).\
+            return self._to_json(DBSession.query(Department).\
                 get(int(department_id)))
         elif kwargs:
              try:
                  if kwargs['FIRST']:
-                     return self._jsonise(DBSession.query(Department).order_by(\
+                     return self._to_json(DBSession.query(Department).order_by(\
                          Department.id).first())
              except KeyError as err:
                  #Return last because first failed!
-                 return self._jsonise(DBSession.query(Department).order_by( \
+                 return self._to_json(DBSession.query(Department).order_by( \
                      desc(Department.id)).first())
         elif not len(args) and not len(kwargs):
             return DBSession.query(Department).\
