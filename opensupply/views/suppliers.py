@@ -39,7 +39,10 @@ def supplier_first(request):
     """
     View to navigate to the first supplier
     """
-    return supplier_controller.get(FIRST=True)
+    supplier = supplier_controller.get(FIRST=True)
+    print(supplier)
+
+    return supplier
 
 
 def supplier_last(request):
