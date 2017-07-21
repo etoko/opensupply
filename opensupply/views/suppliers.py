@@ -36,28 +36,48 @@ department_controller = DepartmentController()
 
 @view_config(route_name = "supplier_first", renderer="string")
 def supplier_first(request):
-    print(request)
+    """
+    View to navigate to the first supplier
+    """
+    return supplier_controller.get(FIRST=True)
 
 
-def _create(self):
+def supplier_last(request):
     """
-    Create new supplier
+    View to navigate to the last supplier
     """
-    pass
+    pass #TODO implementation of navigation to last supplier
 
-def _update(self):
-    """
-    Update a new supplier
-    """
-    pass
+
 
 @view_config(route_name="supplier_save", renderer="string")
 def supplier_save(request):
     """
     Called after user clicks save button
     """
-    _update if supplier_id == -1 else _create
+    print(request.params)
+    j_supplier = None
+    s_id  = request.params['supplier_id']  
+    name  = request.params['supplier_name']
+    tel_1 = request.params['supplier_tel_1']
+    tel_2 = request.params['supplier_tel_2']
+    email = request.params['supplier_email']
+    fax   = request.params['supplier_fax']
+    address = request.params['supplier_address']
+    notes   = request.params['supplier_notes']
+    
+    j_supplier = {
+        'supplier_id'  : s_id,
+        'supplier_name':  name,
+        'supplier_tel_1': tel_1,
+        'supplier_tel_2': tel_2,
+        'supplier_email': email,
+        'supplier_fax': fax,
+        'supplier_address': address,
+        'supplier_notes': notes 
+    }
 
+    supplier_controller.save(j_supplier)
 
 def supplier_delete(request):
     """
