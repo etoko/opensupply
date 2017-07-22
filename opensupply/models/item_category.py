@@ -32,7 +32,7 @@ class ItemCategory(Base):
     
     __tablename__ = "item_categories"
 
-    id = Column("id", Integer, Sequence("supplier_id_seq"), primary_key = True)
+    id = Column("id", Integer, Sequence("item_category_id_seq"), primary_key = True)
     name = Column("name", String)
     notes = Column("notes", String(200), nullable = True)
     created_by = Column(Integer, ForeignKey("users.id"), nullable = True)
@@ -40,7 +40,6 @@ class ItemCategory(Base):
     modified_by = Column(Integer, ForeignKey("users.id"), nullable = True)
     modified_on = Column(DateTime, default = datetime.now(), onupdate = datetime.now())
 
-    branches = relationship("ItemCategoryBranch")
 
     def __init__(self, name):
         self.name = name
