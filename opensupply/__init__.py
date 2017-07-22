@@ -98,6 +98,7 @@ def main(global_config, **settings):
     config.add_route("item_categories_next", "/item_categories/next")
     config.add_route("item_categories_previous", "/item_categories/previous")
     config.add_route("item_categories_delete", "item_categories/delete")
+    config.add_route("item_categories_all", "item_categories/all")
 
 
     #######controller operations###############################################
