@@ -5,13 +5,18 @@ __author__ = "Emmanuel Toko <http://emmanueltoko.blogspot.com><github.com/etoko>
 import os
 import sys
 import transaction
+import json
+
 from beaker.cache import cache_region, region_invalidate
+
+from sqlalchemy import desc
 from sqlalchemy import engine_from_config
 from sqlalchemy.orm import joinedload
 from pyramid.paster import (
     get_appsettings,
     setup_logging,
     )
+from sqlalchemy.exc import IntegrityError
 
 from opensupply.controllers import ApiController
 from opensupply.controllers import UserController
@@ -25,19 +30,20 @@ class SupplierController(ApiController):
         supplier_name_key = "supplier_name"
         user_controller = UserController()
 
-    def _to_dict(self, supplier):
+    def _to_json(self, supplier):
         j_supplier = {
             "id": supplier.id,
             "name": supplier.name,
             "tel_1": supplier.tel_1,
             "tel_2": supplier.tel_2,
             "email": supplier.email,
+             "website": supplier.website,
             "fax": supplier.fax,
             "address": supplier.address,
             "notes": supplier.notes
         }
-        
-        return j_supplier
+         
+        return json.dumps(j_supplier, sort_keys=True, indent=4)
 
     def _validate(j_supplier):
         """
@@ -66,33 +72,69 @@ class SupplierController(ApiController):
         #if not _validate(j_supplier):
         #    raise ValueError("Invalid supplier")
     
-        supplier_id = j_supplier['supplier_id']
-        name = j_supplier['supplier_name']
+        supplier_id = j_supplier["id"]
+        name = j_supplier['name']
         username = None #j_supplier["supplier_username"]
         user = None #user_controller.get(username = username)[0]
-        supplier = Supplier(name)
-        supplier.tel_1 = j_supplier["supplier_tel_1"]
-        supplier.tel_2 = j_supplier["supplier_tel_2"]
-        supplier.fax = j_supplier["supplier_fax"]
-        supplier.email = j_supplier["supplier_email"]
-        supplier.address = j_supplier["supplier_address"]
-        supplier.notes = j_supplier["supplier_notes"]
-        
+        tel_1 = j_supplier["tel_1"]
+        tel_2 = j_supplier["tel_2"]
+        fax = j_supplier["fax"]
+        email = j_supplier["email"]
+        website = j_supplier["website"]
+        address = j_supplier["address"]
+        notes = j_supplier["notes"]
+
+  
         def _create():
             with transaction.manager:
+                supplier = Supplier(name)
+                supplier.tel_1 = tel_1
+                supplier.tel_2 = tel_2
+                supplier.fax = notes
+                supplier.email = email
+                supplier.address = address
+                supplier.notes = notes
+                supplier.website = website
                 supplier.created_by = user
                 supplier.modified_by = user
-                DBSession.add(supplier)
+                j_supplier = DBSession.add(supplier)
+                j_supplier = self.get(LAST=True)
+                return j_supplier
                 #region_invalidate(_all, "hour")
       
         def _update():
             with transaction.manager:
+                supplier = DBSession.query(Supplier).get(supplier_id)
+                if supplier is None:
+                    _create()
+                
+                supplier.name = name
+                supplier.tel_1 = tel_1
+                supplier.tel_2 = tel_2
+                supplier.fax = fax
+                supplier.email = email
+                supplier.website = website
+                supplier.address = address
+                supplier.notes = notes
                 supplier.modified_by = user #user.id
-                DBSession.merge(supplier)
+                supplier = DBSession.merge(supplier)
                 #region_invalidate(_add)
+                return self._to_json(supplier)
 
-        _update() if not supplier_id == -1 else _create()
-    
+        if int(supplier_id) == -1:
+            try:
+                return _create()
+            except IntegrityError as ierror: #Duplicate value
+                raise RuntimeError("Duplicate value") from ierror
+                #TODO More duplicate value handling capability
+        else:
+            return _update()
+ 
+        j_supplier = self._to_json(supplier)
+
+        return None
+
+     
     def get(self, *args, **kwargs):
         """
         Copy the state an instance onto the persistent instance with the same 
@@ -111,17 +153,36 @@ class SupplierController(ApiController):
             """
             supplier = DBSession.query(Supplier).order_by(Supplier.id).first()
             
-            return self._to_dict(supplier)
+            return self._to_json(supplier)
 
 
         def _last():
-            pass #TODO implement navigation to last supplier
-
+            """
+            Navigate to last supplier
+            """ 
+            supplier = DBSession.query(Supplier).\
+                order_by(desc(Supplier.id)).first()
+            return self._to_json(supplier)
         
-        if kwargs['FIRST']:
-             return _first()
+        if args:
+            s_id = args[0]
+            try:
+                s_id = int(s_id)
+                supplier = DBSession.query(Supplier).get(s_id);
+                
+               # return self._to_json(supplier)
+                return supplier
+            except TypeError as err:
+                print(err)
+        elif kwargs: 
+
+            if "FIRST" in kwargs:
+                return _first()
+            elif "LAST" in kwargs:
+                return _last()
         
         return None
+
     
     @cache_region("hour", "suppliers")
     def _all(self):
@@ -138,12 +199,17 @@ class SupplierController(ApiController):
         The database delete operation occurs upon flush().
         """
         supplier = DBSession.query(Supplier).get(supplier.id)
-        if not supplier: raise ValueError("Did not find Supplier")
-        if _validate(supplier):
-            with transaction.manager:
-                DBSession.delete(supplier)
-                return True
-    
+        #next_supplier = supplier.next()
+        if not supplier: 
+            raise ValueError("Did not find Supplier")
+
+        #if _validate(supplier):
+        with transaction.manager:
+            DBSession.delete(supplier)
+            return True
+        
+        return False #delete operation failed
+        
     def save_branch(self, j_branch):
         """
         Create/update a supplier branch
@@ -171,7 +237,7 @@ class SupplierController(ApiController):
             
         def _create():
             supplier = DBSession.query(Supplier).get(supplier_id)
-            print(supplier.to_dict)
+            print(supplier.to_json)
             if supplier is None:
                 raise TypeError(
                        "Could not find supplier with id: %s" % supplier_id)
