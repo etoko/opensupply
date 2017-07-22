@@ -13,13 +13,16 @@ function newSupplier()
     var supplier_fax = dojo.byId("supplier_fax");
     var supplier_email = dojo.byId("supplier_email");
     var supplier_address = dojo.byId("supplier_address");
-    var supplier_notes = dojo.byId("supplier_notes");
+    var supplier_notes = dijit.byId("supplier_notes");
 
     supplier_id.value = -1;
     supplier_name.value = "";
+    supplier_tel_1.value = "";
+    supplier_tel_2.value = "";
     supplier_fax.value = "";
     supplier_email.value = "";
     supplier_address.value = "";
+    supplier_notes.set("value", "");
     
     dojo.publish("/saving", [{message: "<font size='2'><b>Enter new Supplier",
         type: "info", duration: 15000}]);
@@ -59,10 +62,11 @@ function firstSupplier()
     dojo.xhrGet(
     {
         url: "/supplier/first",
-        handleAs: "text",
+        handleAs: "json",
         load: function(response)
         {
-            populateSupplierControls(response);
+            var supplier = dojo.fromJson(response)
+            populateSupplierControls(supplier);
         },
         error: function(response)
         {
@@ -366,14 +370,14 @@ function populateSupplierControls(supplier)
 
   //      return;
   //  }
-    supplier_id.set("value", supplier);
-    supplier_name.set("value", supplier);
-    supplier_tel_1.set("value", supplier);
-    supplier_tel_2.set("value", supplier);
-    supplier_fax.set("value", supplier);
-    supplier_email.set("value", supplier);
-    supplier_address.set("value", supplier);
-    supplier_notes.set("value", supplier)
+    supplier_id.set("value", supplier.id);
+    supplier_name.set("value", supplier.name);
+    supplier_tel_1.value = supplier.tel_1;
+    supplier_tel_2.value = supplier.tel_2;
+    supplier_fax.set("value", supplier.fax);
+    supplier_email.set("value", supplier.email);
+    supplier_address.set("value", supplier.address);
+    supplier_notes.set("value", supplier.notes)
 
 //    var bank = supplier.bank;
 
