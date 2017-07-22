@@ -61,9 +61,9 @@ class Department(Base):
             "modified_on": self.modified_on
         }
 
-class ItemCategory(Base):
+class DepartmentItemCategory(Base):
 
-    __tablename__ = "item_categories"
+    __tablename__ = "department_item_categories"
 
     id = Column(Integer, Sequence("item_category_id_seq"), primary_key = True)
     name = Column(String(30), nullable = False)
