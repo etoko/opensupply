@@ -258,7 +258,7 @@
            <div data-dojo-type="dijit.Menu" style="border: 0; width: 100%;" >
              <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Departments', '/departments/')">Departments</div>
                <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Suppliers', '/suppliers/')">Suppliers</div>
-               <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Items', '/proc/')">Items</div>
+               <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Items', '/items/')">Items</div>
                <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Banks', '/banks/')">Banks</div>
                <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Requisitions', '/requisitions/')">Requisitions</div>
                <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Purchase Orders', '/purchase_orders/')">Purchase Orders</div>
