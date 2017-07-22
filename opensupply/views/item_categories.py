@@ -23,13 +23,14 @@ from opensupply.controllers import (
                             DepartmentController,
                             UserController, 
                             PermissionController,
+                            ItemCategoryController,
                             )
 from opensupply.security import USERS
 from opensupply.models import User
 from opensupply.util import operations
 from opensupply.models import DBSession
 
-item_category_controller = SupplierController()
+item_category_controller = ItemCategoryController()
 user_controller = UserController()
 permission_controller = PermissionController()
 department_controller = DepartmentController()
@@ -44,7 +45,6 @@ def item_category_first(request):
     View to navigate to the first item_category
     """
     item_category = item_category_controller.get(FIRST=True)
-    print(item_category)
 
     return item_category
 
@@ -97,32 +97,35 @@ def item_category_save(request):
     """
     Called after user clicks save button
     """
+    print(request.params)
     j_item_category = None
     item_category_id  = request.params['item_category_id']  
     name  = request.params['item_category_name']
-    tel_1 = request.params['item_category_tel_1']
-    tel_2 = request.params['item_category_tel_2']
-    email = request.params['item_category_email']
-    website = request.params["item_category_website"]
-    fax   = request.params['item_category_fax']
-    address = request.params['item_category_address']
-    notes   = request.params['item_category_notes']
+    notes = request.params['item_category_notes']
     
     j_item_category = {
         'id'  : item_category_id,
         'name':  name,
-        'tel_1': tel_1,
-        'tel_2': tel_2,
-        'email': email,
-        "website": website,
-        'fax': fax,
-        'address': address,
         'notes': notes 
     }
 
     item_category = item_category_controller.save(j_item_category)
     
     return item_category
+
+@view_config(route_name="item_categories_all", renderer="json")
+def item_category_list(request):
+    item_categories = item_category_controller.get()
+    item_categories_json = []
+
+    for item_category in item_categories:
+        item_categories_json.append(\
+            json.dumps(item_category.to_dict, indent=4))
+
+    
+    print(json.dumps({"label":"ym_label", "identifier": "item_categories", "items":item_categories_json}, indent=4))
+    return {"label":"item_categories", "identifier":"item_categories_001" , "items": item_categories_json}
+    
 
 @view_config(route_name="item_categories_delete", renderer="json")
 def item_category_delete(request):
