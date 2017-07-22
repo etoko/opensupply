@@ -80,6 +80,15 @@ def main(global_config, **settings):
     config.add_route("suppliers_previous", "/suppliers/previous")
     config.add_route("suppliers_delete", "suppliers/delete")
 
+    #Items
+    config.add_route("items_page", "/items/")
+    config.add_route("items_save", "/items/save")
+    config.add_route("items_first", "/items/first")
+    config.add_route("items_last", "/items/last")
+    config.add_route("items_next", "/items/next")
+    config.add_route("items_previous", "/items/previous")
+    config.add_route("items_delete", "items/delete")
+
     #######controller operations###############################################
     config.add_route('supplier_controller', '/supplier/operations')
     config.add_route('department_controller', '/department/save')
