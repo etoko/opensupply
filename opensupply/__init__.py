@@ -73,8 +73,12 @@ def main(global_config, **settings):
 
 
     #SUPPLIERS
-    config.add_route("supplier_save", "/supplier/save")
-    config.add_route("supplier_first", "/supplier/first")
+    config.add_route("suppliers_save", "/suppliers/save")
+    config.add_route("suppliers_first", "/suppliers/first")
+    config.add_route("suppliers_last", "/suppliers/last")
+    config.add_route("suppliers_next", "/suppliers/next")
+    config.add_route("suppliers_previous", "/suppliers/previous")
+    config.add_route("supplier_delete", "suppliers/delete")
 
     #######controller operations###############################################
     config.add_route('supplier_controller', '/supplier/operations')

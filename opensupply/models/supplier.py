@@ -13,6 +13,7 @@ from sqlalchemy import (
     Table,
     UniqueConstraint,
     )
+from sqlalchemy import desc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref, column_property
 
@@ -25,6 +26,7 @@ from pyramid.security import (
 #from scm.util import dump_datetime
 from datetime import datetime
 from .meta import Base
+from .meta import DBSession
 
 class Supplier(Base):
     
@@ -59,13 +61,26 @@ class Supplier(Base):
         return {
             "id":          self.id,
             "name":        self.name,
-            "created_by":  self.created_by,
+            "fax":         self.fax,
+            "email":       self.email,
+            "website":     self.website,
+            "address":     self.address,
+            "notes":       self.notes
+            #"created_by":  self.created_by,
             #"created_on":  dump_datetime(self.created_on),
-            "created_on":  datetime(self.created_on),
-            "modified_by": self.modified_by,
-            "modified_on": datetime(self.modified_on),
+            #"created_on":  datetime(self.created_on),
+            #"modified_by": self.modified_by,
+            #"modified_on": datetime(self.modified_on),
         }
 
+    def next(self):
+        return DBSession.query(Supplier).filter(Supplier.id > self.id).\
+          order_by(Supplier.id).first()
+
+
+    def previous(self):
+        return DBSession.query(Supplier).filter(Supplier.id < self.id).\
+          order_by(desc(Supplier.id)).first()
 
 class SupplierBranch(Base):
 
