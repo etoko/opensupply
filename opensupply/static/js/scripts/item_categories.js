@@ -25,7 +25,7 @@ function newItemCategory()
  *Function saves a new deparment or updates an existing item_category
  *
  */
-function item_category_save()
+function saveItemCategory()
 {
     //var formToValidate = dojo.byId("item_category_form");
     //if (formToValidate.validate())
@@ -35,8 +35,8 @@ function item_category_save()
         dojo.xhrGet(
         {
             form: "item_category_form",
-            handleAs: "text",
-            url: "item_category/save",
+            handleAs: "json",
+            url: "item_categories/save",
             load: function(response)
             {
                 //dojo.publish("/saved", [{message: "<font size='2'><b>...Saved", type: "info", duration: 15000}]);
@@ -60,7 +60,7 @@ function item_category_save()
 
 
 
-} //End of function deepartment_save
+} //End of function saveItemCategory
 
 
 //function informationMessage(message)
@@ -76,7 +76,8 @@ function firstItemCategory()
 {
     dojo.xhrGet(
     {
-        url: "item_category/first",
+        url: "item_categories/first",
+        handleAs: "json",
         load: function(response)
         {
             var item_category = dojo.fromJson(response);
@@ -105,8 +106,8 @@ function previousItemCategory()
     dojo.xhrGet(
     {
         form: "item_category_form",
-        url: "item_category/previous",
-        //handleAs: "json",
+        url: "item_categories/previous",
+        handleAs: "json",
         load: function(response)
         {
             var item_category = dojo.fromJson(response);
@@ -134,8 +135,8 @@ function nextItemCategory()
     dojo.xhrGet(
     {
         form: "item_category_form",
-        url: "item_category/next",
-        //handleAs: "json",
+        url: "item_categories/next",
+        handleAs: "json",
         load: function(response)
         {
             var item_category = dojo.fromJson(response);
@@ -156,7 +157,8 @@ function lastItemCategory()
     dojo.xhrGet(
     {
         form: "item_category_form",
-        url: "item_category/last",
+        url: "item_categories/last",
+        handleAs: "json",
         load: function(response)
         {
             var item_category = dojo.fromJson(response);
@@ -183,12 +185,10 @@ function populateItemCategoryControls(item_category)
 
     var id = dijit.byId("item_category_id");
     var name = dijit.byId("item_category_name");
-    //var type = dijit.byId("item_category_type");
     var notes = dijit.byId("item_category_notes");
 
     id.setValue(item_category.id);
     name.setValue(item_category.name);
-    //type.setValue(item_category.type);
     notes.setValue(item_category.notes);
 } //End of function populateItemCategoryControls
 
