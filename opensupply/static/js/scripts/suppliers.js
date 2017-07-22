@@ -12,6 +12,7 @@ function newSupplier()
     var supplier_te1_2 = dojo.byId("supplier_tel_2");
     var supplier_fax = dojo.byId("supplier_fax");
     var supplier_email = dojo.byId("supplier_email");
+    var supplier_website = dojo.byId("supplier_website");
     var supplier_address = dojo.byId("supplier_address");
     var supplier_notes = dijit.byId("supplier_notes");
 
@@ -21,6 +22,7 @@ function newSupplier()
     supplier_tel_2.value = "";
     supplier_fax.value = "";
     supplier_email.value = "";
+    supplier_website.value = "";
     supplier_address.value = "";
     supplier_notes.set("value", "");
     
@@ -35,19 +37,23 @@ function saveSupplier()
 {
         dojo.xhrPost(
         {
-            url: "/supplier/save",
+            url: "/suppliers/save",
             form: "supplier_form" ,
             //putData: dojo.formToJson("supplier_form"),
-            //handleAs: "json",
+            handleAs: "json",
             load: function(response)
             {
-                alert(dojo.byId("supplier_operation").value);
-        
-                status_message_display("busy", "Creating Supplier...")
+                var supplier = dojo.fromJson(response);
+                //alert(supplier);
+                dojo.byId("NavigationInformation").innerHTML = "Saved: " + supplier.name;
+                dijit.byId("NavigationDialog").show();
+                populateSupplierControls(supplier);
+                status_message_display("busy", "Creating Supplier...");
             },
             error: function(response)
             {
-                dojo.publish("/saved",[{message: "<font size='2'><b>...Failed", type: "error", duration: 5000}]);
+                dojo.byId("NavigationInformation").innerHTML = response;
+                dijit.byId("NavigationDialog").show();
             }
         });
 }
@@ -61,7 +67,7 @@ function firstSupplier()
     //The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
     dojo.xhrGet(
     {
-        url: "/supplier/first",
+        url: "/suppliers/first",
         handleAs: "json",
         load: function(response)
         {
@@ -70,6 +76,8 @@ function firstSupplier()
         },
         error: function(response)
         {
+                dojo.byId("NavigationInformation").innerHTML = response;
+                dijit.byId("NavigationDialog").show();
             dojo.publish("/saved",[{message: "<font size='2'><b>...Failed<br>" + response, type: "error", duration: 5000}]);
         }
     });
@@ -80,43 +88,46 @@ function firstSupplier()
  */
 function previousSupplier()
 {
-    var position = dojo.cookie("CurrentSupplier");
+//    var position = dojo.cookie("CurrentSupplier");
 
-    if (position == undefined)
-    {
-        position = 0;
-    }
+//    if (position == undefined)
+//    {
+//        position = 0;
+//    }
 
-    position = Math.abs(position);
+//    position = Math.abs(position);
 
-    if (position < 0)
-    {
-        position = 0;
-    }
+//    if (position < 0)
+//    {
+//        position = 0;
+//    }
 
-    if (position == 0)
-    {
-        dojo.byId("NavigationInformation").innerHTML =
-            "You have reached the first supplier in the list";
-        dijit.byId("NavigationDialog").show();
-        firstSupplier();
-        return;
-    }
+//    if (position == 0)
+//    {
+//        dojo.byId("NavigationInformation").innerHTML =
+//            "You have reached the first supplier in the list";
+//        dijit.byId("NavigationDialog").show();
+//        firstSupplier();
+//        return;
+//    }
 
-    position = position - 1;
+//    position = position - 1;
     
     //The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
     dojo.xhrGet(
     {
-        url: "servlets/supplierManager?operationType=previous&position=" + position,
-        handleAs: "text",
+        url: "/suppliers/previous",
+        form: "supplier_form",
+        handleAs: "json",
         load: function(response)
         {
             var supplier = dojo.fromJson(response);
-            populateSupplierControls(supplier, position);
+            populateSupplierControls(supplier);
         },
         error: function(response)
         {
+                dojo.byId("NavigationInformation").innerHTML = response;
+                dijit.byId("NavigationDialog").show();
             dojo.publish("/saved",[{message: "<font size='2'><b>...Failed<br>" + response, type: "error", duration: 5000}]);
         }
     });
@@ -127,46 +138,49 @@ function previousSupplier()
  */
 function nextSupplier()
 {
-    var position = dojo.cookie("CurrentSupplier");
+//    var position = dojo.cookie("CurrentSupplier");
     
-    var supplierNumber = dojo.cookie("SupplierNumber");
+//    var supplierNumber = dojo.cookie("SupplierNumber");
     
-    if (position == undefined)
-    {
-        position = 0;
-    }
+//    if (position == undefined)
+//    {
+//        position = 0;
+//    }
 
-    position = Math.abs(position);
-    supplierNumber = Math.abs(supplierNumber);
+//    position = Math.abs(position);
+//    supplierNumber = Math.abs(supplierNumber);
     
-    if (position < 0)
-    {
-        position = 0;
-    }
+//    if (position < 0)
+//    {
+//        position = 0;
+//    }
 
-    position = position + 1;
+//    position = position + 1;
 
-    if (position >= supplierNumber)
-    {
-        dojo.byId("NavigationInformation").innerHTML =
-            "You have reached the last supplier in the list";
-        dijit.byId("NavigationDialog").show();
-        lastSupplier();
-        return;
-    }
+//    if (position >= supplierNumber)
+//    {
+//        dojo.byId("NavigationInformation").innerHTML =
+//            "You have reached the last supplier in the list";
+//        dijit.byId("NavigationDialog").show();
+//        lastSupplier();
+//        return;
+//    }
     
     //The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
     dojo.xhrGet(
     {
-        url: "servlets/supplierManager?operationType=next&position=" + position,
-        handleAs: "text",
+        url: "/suppliers/next",
+        form: "supplier_form",
+        handleAs: "json",
         load: function(response)
         {
             var supplier = dojo.fromJson(response);
-            populateSupplierControls(supplier, position);
+            populateSupplierControls(supplier);
         },
         error: function(response)
         {
+                dojo.byId("NavigationInformation").innerHTML = response;
+                dijit.byId("NavigationDialog").show();
             dojo.publish("/saved",[{message: "<font size='2'><b>...Failed<br>" + response, type: "error", duration: 5000}]);
         }
     });
@@ -174,18 +188,18 @@ function nextSupplier()
 
 function lastSupplier()
 {
-    var supplierSize = dojo.cookie("SupplierNumber");
-    var position = (Math.abs(supplierSize) - 1);
+    //var supplierSize = dojo.cookie("SupplierNumber");
+    //var position = (Math.abs(supplierSize) - 1);
 
     //The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
        dojo.xhrGet(
         {
-            url: "servlets/supplierManager?operationType=last",
-            handleAs: "text",
+            url: "/suppliers/last",
+            handleAs: "json",
             load: function(response)
             {
                 var supplier = dojo.fromJson(response);
-                populateSupplierControls(supplier, position);
+                populateSupplierControls(supplier);
             },
             error: function(response)
             {
@@ -199,24 +213,27 @@ function lastSupplier()
  */
 function deleteSupplier()
 {
-    var supplierDialog = dijit.byId("SupplierDeleteDialog");
-    var supplierId = dijit.byId("Supplier.Id").getValue();
+    var answer = confirm("Are you sure you want to delete supplier: " + 
+        dijit.byId("supplier_name").get("value")); 
+    if (answer == false)
+    {
+        return;
+    }
     
-    dojo.publish("/saving",[{message: "<font size='2'><b>Deleting...<b>", type: "info", duration: 3000}]);
-
     dojo.xhrPost(
     {
-        url: "servlets/supplierManager?operationType=delete&supplierId=" + supplierId ,
+        url: "/suppliers/delete",
+        form: "supplier_form",
         timeout: 30000,
-        load: function()
+        handleAs: "json",
+        load: function(response)
         {
-            dojo.publish("/saved",[{message: "<font size='2'><b>...Deleted<b>", type: "info", duration: 5000}]);
-            supplierDialog.hide();
-            nextSupplier();
+            var supplier = dojo.fromJson(response);
+            populateSupplierControls(supplier);
         },
         error: function(response)
         {
-            dojo.publish("/saved",[{message: "<font size='2'><b>...Failed<br>" + response, type: "error", duration: 5000}]);
+            alert(response);
         }
     });
 }//End of function deleteSupplier
@@ -359,6 +376,7 @@ function populateSupplierControls(supplier)
     var supplier_te1_2 = dijit.byId("supplier_tel_2");
     var supplier_fax = dijit.byId("supplier_fax");
     var supplier_email = dijit.byId("supplier_email");
+    var supplier_website = dijit.byId("supplier_website");
     var supplier_address = dijit.byId("supplier_address");
     var supplier_notes = dijit.byId("supplier_notes");
 
@@ -376,6 +394,7 @@ function populateSupplierControls(supplier)
     supplier_tel_2.value = supplier.tel_2;
     supplier_fax.set("value", supplier.fax);
     supplier_email.set("value", supplier.email);
+    supplier_website.set("value", supplier.website);
     supplier_address.set("value", supplier.address);
     supplier_notes.set("value", supplier.notes)
 
