@@ -1,20 +1,4 @@
-<%--
-    Document   : items
-    Created on : Jul 4, 2009, 5:48:30 PM
-    Author     : root
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
-
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ttems</title>
-    </head>
-    <body>
         <table cellspacing="0" cellpadding="0" width="100%">
             <tr>
                 <td width="630">
@@ -37,24 +21,24 @@
                                 </script>
                            </button>
                            <button dojoType="dijit.form.Button" id="items.first" onClick="firstItem()">
-                               <img alt="first button" src="resources/images/first.png"
+                               <img alt="first button" src="static/images/first.png"
                                height="16" width="16">
                                    First
                             </button>
                            <button dojoType="dijit.form.Button" id="items.previous" onClick="previousItem()">
-                               <img src="resources/images/previous.png" width="16" height="16">
+                               <img src="static/images/previous.png" width="16" height="16">
                                Previous
                            </button>
                            <button dojoType="dijit.form.Button" id="items.next" onClick="nextItem()">
-                               <img src="resources/images/next.png" width="16" height="16">
+                               <img src="static/images/next.png" width="16" height="16">
                                Next
                            </button>
                            <button dojoType="dijit.form.Button" id="items.last" onClick="lastItem()">
-                               <img src="resources/images/last.png" width="16" height="16">
+                               <img src="static/images/last.png" width="16" height="16">
                                 Last
                             </button>
                             <button dojoType="dijit.form.Button" id="items.find" onclick="findItem()">
-                               <img src="resources/images/find.png" width="16" height="16">
+                               <img src="static/images/find.png" width="16" height="16">
                                 Find
                                 <script type="dojo/method" event="onClick" args="evt">
                                     // Show the Dialog:
@@ -83,11 +67,11 @@
                                                      <input dojoType="dijit.form.TextBox" name="itemNamekeywords" id ="itemNamekeywords"
                                                            type="text" style="width:25em" />
                                                      <button dojoType="dijit.form.Button" onclick="findItem()">
-                                                         <img src="resources/images/find.png" height="18">
+                                                         <img src="static/images/find.png" height="18">
                                                          Search
                                                      </button>
                                                     <button id="ItemSearchCancelButton" dojoType="dijit.form.Button">
-                                                        <img src="resources/images/cancel.png">
+                                                        <img src="static/images/cancel.png">
                                                         Cancel
                                                         <script type="dojo/method" event="onClick" args="evt">
                                                             dijit.byId("ItemFindDialog").hide();
@@ -104,7 +88,7 @@
                                              <tr>
                                                  <td colspan="2">
                                                      <div dojoType="dojo.data.ItemFileWriteStore"
-                                                        jsId="itemSearchStore" url="resources/json/genericEmptyjson.json">
+                                                        jsId="itemSearchStore" url="static/json/genericEmptyjson.json">
                                                     </div>
 
                                                      <table id="itemSearchGrid" dojoType="dojox.grid.DataGrid" store="itemSearchStore"
@@ -137,7 +121,7 @@
                                          <table width="300">
                                              <tr align="center">
                                                  <td valign="middle" align="left" style="width:50px;">
-                                                     <img src="resources/images/question.png">
+                                                     <img src="static/images/question.png">
                                                  </td>
                                                  <td align="left">
                                                      Are you sure you want to delete this item?
@@ -146,12 +130,12 @@
                                              <tr align="center">
                                                  <td colspan="2">
                                                      <button dojoType="dijit.form.Button" onclick="deleteItem()" id="ItemDeleteButton">
-                                                         <img src="resources/images/delete.png" height="18" />
+                                                         <img src="static/images/delete.png" height="18" />
                                                          Delete
                                                      </button>
 
                                                     <button id="itemDeleteCancelButton" dojoType="dijit.form.Button">
-                                                        <img src="resources/images/cancel.png" />
+                                                        <img src="static/images/cancel.png" />
                                                         Cancel
                                                         <script type="dojo/method" event="onClick" args="evt">
                                                             dijit.byId("ItemDeleteDialog").hide();
@@ -181,63 +165,25 @@
                                                     <label for="Items.Id">Item Id</label>
                                                 </td>
                                                 <td>
-                                                    <input id="Items.Id" name="ItemId" type="text" dojoType="dijit.form.NumberTextBox" readonly/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="ItemName">Name:</label>
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="ItemName" id="ItemName"
-                                                       dojoType="dijit.form.ValidationTextBox" trim="true"
-                                                       uppercase="true" required="true" size="60"
-                                                       invalidMessage="You must enter the item's name"
-                                                       style="width: 30em;" value=""/>
-                                                       </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div dojoType="dojo.data.ItemFileReadStore"
-                                                        jsId="categoryStore"
-                                                        url="servlets/categoryManager?operationType=getNames">
-                                                    </div>
-                                                    <label for="Items.Categories">Category:</label>
-                                                </td>
-                                                <td>
-                                                    <input dojoType="dijit.form.FilteringSelect" required="true"
-                                                        store="categoryStore" invalidMessage="You must select the item's category"
-                                                        searchAttr="name" name="Items.Categories" style="width:430px;"
-                                                        id="Items.Categories" name="Items.Categories"/>
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-
-                                                    <div dojoType="dojo.data.ItemFileReadStore"
-                                                        jsId="supplierStore"
-                                                        url="servlets/supplierManager?operationType=getNames">
-                                                    </div>
-
-                                                    <label for="ItemSupplier">Supplier:</label>
-                                                </td>
-                                                <td>
-                                                    <input dojoType="dijit.form.FilteringSelect"
-                                                        store="supplierStore" invalidMessage="You must select the item's supplier"
-                                                        searchAttr="name" style="width:430px;" name="ItemSupplier"
-                                                        id="ItemSupplier">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="ItemUnitMeasurement">Measurement:</label>
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="ItemUnitMeasurement" id="ItemUnitMeasurement" size="11"
-                                                       dojoType="dijit.form.TextBox"  style="width:15em;"/>
-                                                    </td>
-                                            </tr>
-                                            <tr>
+                                                    <input id="Items.Id" name="ItemId" type="text" dojoType="dijit.form.NumberTextBox" readonly/> </td>  </tr>   <tr><td>  <label for="ItemName">Name:</label></td><td> <input type="text" name="ItemName" id="ItemName"  dojoType="dijit.form.ValidationTextBox" trim="true"  uppercase="true" required="true" size="60" invalidMessage="You must enter the item's name"  style="width: 30em;" value=""/>
+  </td> </tr>
+ <tr>
+ <td>  <div dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="item_categories/all"> </div>
+  <label for="Items.Categories">Category:</label> </td>
+ <td> <input dojoType="dijit.form.FilteringSelect" required="true" store="categoryStore" invalidMessage="You must select the item's category"  searchAttr="name" name="Items.Categories" style="width:430px;"  id="Items.Categories" name="Items.Categories"/> </td>
+ </tr>
+ <tr>
+   <td><a href="${request.route_url('item_categories_all')}">Link</a>
+    <div dojoType="dojo.data.ItemFileReadStore"  jsId="supplierStore" url="item_categories/all">  </div>
+  </td>
+</tr>
+<tr>
+ <td><label for="ItemUnitMeasurement">Measurement:</label> </td>
+  <td> <input type="text" name="ItemUnitMeasurement" id="ItemUnitMeasurement" size="11"
+ dojoType="dijit.form.TextBox"  style="width:15em;"/>
+  </td>
+  </tr>
+  <tr>
                                                 <td>
                                                        <label for="ItemUnitPrice">Unit Price (UGX):</label>
                                                 </td>
@@ -263,6 +209,9 @@
                                                     <input dojoType="dijit.form.TextBox" type="text" name="ItemDescription" id="ItemDescription"
                                                        size="30"  style="width:30em;"/>
                                                     </td>
+                                            </tr>
+                                            <tr>
+                                              <td><button dojoType="dijit.form.Button">Add Specifications</button></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -291,7 +240,6 @@
                 </td>
             </tr>
         </table>
-    </body>
 </html>
 
 
