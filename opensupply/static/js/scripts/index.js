@@ -27,6 +27,8 @@ function newValue()
         newDepartment();
     else if (selected_tab == "Suppliers")
         newSupplier();
+    else if (selected_tab == "Item Categories")
+        newItemCategory();
 }
 
 function first()
@@ -38,6 +40,8 @@ function first()
         firstDepartment();
     else if (selected_tab == "Suppliers")
         firstSupplier();
+    else if (selected_tab == "Item Categories")
+        firstItemCategory();
 }
 
 function previous()
@@ -49,6 +53,8 @@ function previous()
         previousDepartment();
     else if (selected_tab == "Suppliers")
         previousSupplier();
+    else if (selected_tab == "Item Categories")
+        previousItemCategory();
 }
 
 function next()
@@ -60,6 +66,8 @@ function next()
         nextDepartment();
     else if (selected_tab == "Suppliers")
         nextSupplier();
+    else if (selected_tab == "Item Categories")
+        nextItemCategory();
 }
 
 function last()
@@ -71,6 +79,8 @@ function last()
         lastDepartment();
     else if (selected_tab == "Suppliers")
         lastSupplier();
+    else if (selected_tab == "Item Categories")
+        lastItemCategory();
 }
 
 function save()
@@ -82,7 +92,25 @@ function save()
         saveSupplier();
     else if (selected_tab == "Departments")
         department_save();
+    else if (selected_tab == "Item Categories")
+        saveItemCategory();
 }//End save function
+
+function delete_operation()
+{
+
+    selected_tab = which_tab();
+    if (selected_tab == "Users")
+        user_save(); 
+    else if (selected_tab == "Suppliers")
+        deleteSupplier();
+    else if (selected_tab == "Departments")
+        department_save();
+    else if (selected_tab == "Items")
+        deleteItem();
+    else if (selected_tab == "Item Categories")
+        deleteItemCategory();
+}
 
 /**
  * Function imports the required classes.
@@ -122,7 +150,7 @@ function importClasses()
     dojo.require("dijit.form.RadioButton");
     dojo.require("dijit.form.CheckBox");
     dojo.require("dijit.form.TextBox");
-   
+
     dojo.require("dojo.data.ItemFileReadStore");
     dojo.require("dojo.data.ItemFileWriteStore");
     dojo.require("dojox.data.FileStore");
