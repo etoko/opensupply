@@ -37,6 +37,10 @@
         </td>
       </tr>
       <tr>
+        <td><label for="supplier_website">Website</label></td>
+        <td><div id="supplier_website" name="supplier_website" data-dojo-type="dijit.form.TextBox" style="width:100%"><div>
+      </tr>
+      <tr>
         <td valign="top"><label for="supplier_address">Address: </label></td>
         <td><textarea dojoType="dijit.form.SimpleTextarea" id="supplier_address" name="supplier_address" rows="3" cols="90"></textarea></td>
       </tr>
