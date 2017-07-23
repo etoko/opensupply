@@ -168,6 +168,7 @@
     <script type="text/javascript" src="static/js/scripts/users.js"></script>
     <script type="text/javascript" src="static/js/scripts/departments.js"></script>
     <script type="text/javascript" src="static/js/scripts/items.js"></script>
+    <script type="text/javascript" src="static/js/scripts/item_categories.js"></script>
 
 
   </head>
@@ -269,7 +270,7 @@
                <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Delivery Note', '/delivery_note/')">Delivery Note</div>
                <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Users', '/users/')">Users</div>
                <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('GSM Modem', '/modem/')">Modem</div>
-               <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Item Categories', '/item_categories_page/')">Item Categories</div>
+               <div data-dojo-type="dijit.MenuItem" data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste"' onClick="addTab('Item Categories', '/item_categories/')">Item Categories</div>
              </div>
            </div>
          <div data-dojo-type="dijit.layout.AccordionPane" title="Reports">
