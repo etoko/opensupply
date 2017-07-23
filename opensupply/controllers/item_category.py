@@ -98,7 +98,6 @@ class ItemCategoryController(ApiController):
                 #region_invalidate(_add)
                 return self._to_json(item_category)
 
-        print("CATEGORY ID: " + item_category_id)
         try:
             item_category_id = int(item_category_id)
         except ValueError as verror: 
