@@ -119,12 +119,10 @@ def item_category_list(request):
     item_categories_json = []
 
     for item_category in item_categories:
-        item_categories_json.append(\
-            json.dumps(item_category.to_dict, indent=4))
+        item_categories_json.append(
+            item_category.to_dict)
 
-    
-    print(json.dumps({"label":"ym_label", "identifier": "item_categories", "items":item_categories_json}, indent=4))
-    return {"label":"item_categories", "identifier":"item_categories_001" , "items": item_categories_json}
+    return {"label":"name", "identifier":"id" , "items": item_categories_json	}
     
 
 @view_config(route_name="item_categories_delete", renderer="json")
