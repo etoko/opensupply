@@ -94,7 +94,7 @@ class SupplierBranch(Base):
     email_address = Column("email_address", String, nullable = True)
     website = Column(String(30), nullable = True)
     #city = 
-    items = relationship("Item")
+    #items = relationship("Item")
  
     def __init__(self, supplier_id): 
        self.supplier = supplier_id
