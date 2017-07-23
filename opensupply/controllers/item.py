@@ -68,6 +68,8 @@ class ItemController(ApiController):
     
         item_id = j_item["id"]
         name = j_item['name']
+        category = j_item["category"]
+        unit_of_measurement = j_item["unit_of_measurement"]
         username = None #j_item["item_username"]
         user = None #user_controller.get(username = username)[0]
         notes = j_item["notes"]
@@ -77,6 +79,8 @@ class ItemController(ApiController):
             with transaction.manager:
                 item = Item(name)
                 item.notes = notes
+                item.category = category
+                item.unit_of_measurement = unit_of_measurement
                 item.created_by = user
                 item.modified_by = user
                 j_item = DBSession.add(item)
@@ -91,6 +95,8 @@ class ItemController(ApiController):
                     _create()
                 
                 item.name = name
+                item.category = category
+                item.unit_of_measurement = unit_of_measurement
                 item.notes = notes
                 item.modified_by = user #user.id
                 item = DBSession.merge(item)
