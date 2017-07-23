@@ -22,13 +22,14 @@ from opensupply.controllers import (
                             DepartmentController,
                             UserController, 
                             PermissionController,
+                            ItemController,
                             )
 from opensupply.security import USERS
 from opensupply.models import User
 from opensupply.util import operations
 from opensupply.models import DBSession
 
-item_controller = SupplierController()
+item_controller = ItemController()
 user_controller = UserController()
 permission_controller = PermissionController()
 department_controller = DepartmentController()
@@ -96,27 +97,20 @@ def item_save(request):
     """
     Called after user clicks save button
     """
+    print(request.params)
     j_item = None
     item_id  = request.params['item_id']  
     name  = request.params['item_name']
-    tel_1 = request.params['item_tel_1']
-    tel_2 = request.params['item_tel_2']
-    email = request.params['item_email']
-    website = request.params["item_website"]
-    fax   = request.params['item_fax']
-    address = request.params['item_address']
+    category = request.params["item_category"]
+    unit_of_measurement = request.params["item_unit_measurement"]
     notes   = request.params['item_notes']
     
     j_item = {
-        'id'  : item_id,
-        'name':  name,
-        'tel_1': tel_1,
-        'tel_2': tel_2,
-        'email': email,
-        "website": website,
-        'fax': fax,
-        'address': address,
-        'notes': notes 
+        'id'  :                item_id,
+        'name':                name,
+        'category':            category,
+        'unit_of_measurement': unit_of_measurement,
+        'notes':               notes 
     }
 
     item = item_controller.save(j_item)
