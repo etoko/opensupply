@@ -9,53 +9,35 @@
  */
 function newItem()
 {   
-    var itemId = dojo.byId("Items.Id");
-    var itemname = dojo.byId("ItemName");
-    var itemSupplier = dojo.byId("ItemSupplier");
-    var itemUnitMeasurement = dojo.byId("ItemUnitMeasurement");
-    var itemUnitPrice = dojo.byId("ItemUnitPrice");
-    var itemDescription = dojo.byId("ItemDescription");
-    var quantity = dojo.byId("ItemQuantity");
+    var itemId = dojo.byId("item_id");
+    var itemName = dojo.byId("item_name");
+    var itemUnitMeasurement = dojo.byId("item_unit_measurement");
+    var itemNotes = dojo.byId("item_notes");
 
-    itemId.value = 0;
-    itemname.value = "";
-    itemSupplier.value = "";
+    itemId.value = -1;
+    itemName.value = "";
     itemUnitMeasurement.value = "";
-    quantity.value = 0;
-    itemUnitPrice.value = "";
-    itemDescription.value = "";
-
-    dojo.publish("/saving",[{message: "<font size='2'><b>Enter New Item", type: "info", duration: 15000}]);
+    itemNotes.value = "";
 } //End of function newItem
 
 function saveItem()
 {
-    if (dijit.byId("itemsForm" ).validate())
-    {
-        dojo.publish("/saving",[{message: "<font size='2'><b>Saving...", type: "info", duration: 5000}]);
-        
         dojo.xhrPost(
         {
-            url: "servlets/itemManager" ,
-            form: "itemsForm",
+            url: "items/save" ,
+            form: "item_form",
             timeout: 60000,
+            handleAs: "json",
             load: function(response)
             {
-                dojo.publish("/saved",[{message: "<font size='2'><b>...Saved", type: "info", duration: 5000}]);
+                alert(response);
             },
             error: function(response)
             {
-                dojo.publish("/saved",[{message: "<font size='2'><b>...Failed", type: "error", duration: 5000}]);
+                alert(response);
             }
         });
-    }
 
-    var flag = dojo.cookie("newItem");
-
-    if (flag == "true")
-    {
-        dojo.cookie("newItem", "false", {expires: 5});
-    }
 }//End of function saveItem
 
 /**
@@ -65,17 +47,16 @@ function firstItem()
 {
    dojo.xhrGet(
     {
-        url: "servlets/itemManager?operationType=first",
-        handleAs: "text",
+        url: "items/first",
+        handleAs: "json",
         load: function(response)
         {
             var item = dojo.fromJson(response);
-
-            populateItemsControls(item, 0);
+            populateItemsControls(item);
         },
         error: function(response)
         {
-            dojo.publish("/saving", [{message: "<font size='2'><b>Experienced a Problem while navigating " + response, type: "error", duration: 5000}]);
+           alert(response);
         }
     });
 }//End of function firstItem
@@ -196,6 +177,8 @@ function lastItem()
 function deleteItem()
 {
     var itemDialog = dijit.byId("ItemDeleteDialog");
+    itemDialog.show();
+    return;
     var itemId = dijit.byId("Items.Id").getValue();
     var number = dojo.cookie("numberofitems");
     number = Math.abs(number);
@@ -305,46 +288,38 @@ function itemsPrint()
     'menubar=no,location=no,scrollbars=yes,resizable=yes,height=550,width=816,statusbar=yes,screenX=100,screenY=100,top=100,left=100');
 }//End of function itemsPrint
 
-function populateItemsControls(item, position)
+function populateItemsControls(item)
 {
 
-    if (item.id == "0")
-    {
-        dojo.byId("InformationMessageInformation").innerHTML = "No Items in List"
-        dijit.byId("InformationMessageDialog").show();
-        return;
-    }
+//    if (item.id == "0")
+//    {
+//        dojo.byId("InformationMessageInformation").innerHTML = "No Items in List"
+//        dijit.byId("InformationMessageDialog").show();
+//        return;
+//    }
 
-    var itemId = dojo.byId("Items.Id");
-    var itemname = dojo.byId("ItemName");
-    var category = dijit.byId("Items.Categories");
-    var itemSupplier = dijit.byId("ItemSupplier");
-    var itemUnitMeasurement = dojo.byId("ItemUnitMeasurement");
-    var itemUnitPrice = dojo.byId("ItemUnitPrice");
-    var itemQuantity = dojo.byId("ItemQuantity");
-    var itemDescription = dojo.byId("ItemDescription");
+    var itemId = dojo.byId("item_id");
+    var itemName = dojo.byId("item_name");
+    var itemUnitMeasurement = dojo.byId("item_unit_measurement");
+    var itemNotes = dojo.byId("item_notes");
 
     itemId.value = item.id;
-    itemname.value = item.itemName;
-    category.setValue(item.category);
-    itemSupplier.setValue(item.itemSupplier);
-    itemUnitMeasurement.value = item.itemUnitMeasurement;
-    itemUnitPrice.value = item.itemUnitPrice;
-    itemQuantity.value = item.itemQuantity;
-    itemDescription.value = item.itemDescription;
+    itemName.value = item.name;
+    itemUnitMeasurement.value = item.measurement;
+    itemNotes.value = item.notes;
 
-    var navigator = dojo.byId("itemsNavigator");
-    var number = item.size;
+//    var navigator = dojo.byId("itemsNavigator");
+//    var number = item.size;
 
-    position = Math.abs(position);
-    number = Math.abs(number);
+//    position = Math.abs(position);
+//    number = Math.abs(number);
 
-    if (position > number)
-    {
-        position = number;
-    }
+//    if (position > number)
+//    {
+//        position = number;
+//    }
     
-    navigator.innerHTML = (position + 1) + " of " + (number);
-    dojo.cookie("currentitem", position, {expires: 5});
-    dojo.cookie("numberofitems", number, {expires: 5});
+//    navigator.innerHTML = (position + 1) + " of " + (number);
+//    dojo.cookie("currentitem", position, {expires: 5});
+//    dojo.cookie("numberofitems", number, {expires: 5});
 } //End of function populateItemsControls
