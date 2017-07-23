@@ -29,6 +29,8 @@ function newValue()
         newSupplier();
     else if (selected_tab == "Item Categories")
         newItemCategory();
+    else if (selected_tab == "Items")
+        newItem();
 }
 
 function first()
@@ -42,6 +44,8 @@ function first()
         firstSupplier();
     else if (selected_tab == "Item Categories")
         firstItemCategory();
+    else if (selected_tab == "Item")
+        firstItem();
 }
 
 function previous()
@@ -55,6 +59,8 @@ function previous()
         previousSupplier();
     else if (selected_tab == "Item Categories")
         previousItemCategory();
+    else if (selected_tab == "Items")
+        previousItem();
 }
 
 function next()
@@ -68,6 +74,8 @@ function next()
         nextSupplier();
     else if (selected_tab == "Item Categories")
         nextItemCategory();
+    else if (selected_tab == "Items")
+        nextItem();
 }
 
 function last()
@@ -81,6 +89,8 @@ function last()
         lastSupplier();
     else if (selected_tab == "Item Categories")
         lastItemCategory();
+    else if (selected_tab == "Items")
+        lastItem();
 }
 
 function save()
@@ -94,6 +104,8 @@ function save()
         department_save();
     else if (selected_tab == "Item Categories")
         saveItemCategory();
+    else if (selected_tab == "Items")
+        saveItem();
 }//End save function
 
 function delete_operation()
@@ -110,6 +122,8 @@ function delete_operation()
         deleteItem();
     else if (selected_tab == "Item Categories")
         deleteItemCategory();
+    else if (selected_tab == "Items")
+        deleteItem();
 }
 
 /**
