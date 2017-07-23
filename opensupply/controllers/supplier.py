@@ -120,6 +120,8 @@ class SupplierController(ApiController):
                 supplier = DBSession.merge(supplier)
                 #region_invalidate(_add)
                 return self._to_json(supplier)
+
+
         try:
             supplier_id = int(supplier_id)
         except ValueError as verror:
