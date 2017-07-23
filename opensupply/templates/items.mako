@@ -1,15 +1,10 @@
 <html>
-        <table cellspacing="0" cellpadding="0" width="100%">
-            <tr>
-                <td width="630">
-                        <div id="items.toolbar" dojoType="dijit.Toolbar">
-                           <button dojoType="dijit.form.Button" id="items.new" onclick="newItem()"
-                                iconClass="dijitEditorIcon dijitEditorIconCopy"
-                                showLabel="true">
-                            New
-                           </button>
-                           <button dojoType="dijit.form.Button" id="items.update"
-                            onclick="saveItem()" iconClass="dijitEditorIcon dijitEditorIconSave"
+  <table cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+      <td width="630">
+         <div id="items.toolbar" dojoType="dijit.Toolbar">
+         <button dojoType="dijit.form.Button" id="items.new" onclick="newItem()" iconClass="dijitEditorIcon dijitEditorIconCopy" showLabel="true"> New </button>
+          <button dojoType="dijit.form.Button" id="items.update"  onclick="saveItem()" iconClass="dijitEditorIcon dijitEditorIconSave"
                             showLabel="true">Save</button>
 
                            <button dojoType="dijit.form.Button" id="items.delete"
@@ -51,23 +46,20 @@
             </tr>
             <tr>
                 <td>
-                    <table border="0" width="600">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div id="ItemFindDialog" dojoType="dijit.Dialog" title="Search">
-                                        <table width="300" border="0">
-                                             <tr>
-                                                 <td align="left">
-                                                     Enter the name of the item in the text box
-                                                 </td>
-                                             </tr>
-                                             <tr align="center">
-                                                 <td>
-                                                     <input dojoType="dijit.form.TextBox" name="itemNamekeywords" id ="itemNamekeywords"
-                                                           type="text" style="width:25em" />
-                                                     <button dojoType="dijit.form.Button" onclick="findItem()">
-                                                         <img src="static/images/find.png" height="18">
+ <table border="0" width="600">
+  <tbody>
+   <tr>
+    <td>
+    <div id="ItemFindDialog" dojoType="dijit.Dialog" title="Search">
+     <table width="300" border="0">
+      <tr>
+        <td align="left"> Enter the name of the item in the text box </td>
+      </tr>
+      <tr align="center">
+        <td>
+          <input dojoType="dijit.form.TextBox" name="itemNamekeywords" id ="itemNamekeywords"  type="text" style="width:25em" />
+         <button dojoType="dijit.form.Button" onclick="findItem()">
+         <img src="static/images/find.png" height="18">
                                                          Search
                                                      </button>
                                                     <button id="ItemSearchCancelButton" dojoType="dijit.form.Button">
@@ -149,97 +141,48 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <form dojoType="dijit.form.Form" id="itemsForm" name="itemsForm"
-                                    action="servlets/itemManager" method="post">
-                                        <table border="0" cellspacing="10">
-                                            <tr>
-                                                <td style="width:125px;">
-                                                    <label for="itemsNavigator">Navigation:</label>
-                                                </td>
-                                                <td>
-                                                    <span id="itemsNavigator">0</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="Items.Id">Item Id</label>
-                                                </td>
-                                                <td>
-                                                    <input id="Items.Id" name="ItemId" type="text" dojoType="dijit.form.NumberTextBox" readonly/> </td>  </tr>   <tr><td>  <label for="ItemName">Name:</label></td><td> <input type="text" name="ItemName" id="ItemName"  dojoType="dijit.form.ValidationTextBox" trim="true"  uppercase="true" required="true" size="60" invalidMessage="You must enter the item's name"  style="width: 30em;" value=""/>
+    <form dojoType="dijit.form.Form" id="itemsForm" name="itemsForm" action="servlets/itemManager" method="post">
+        <table border="0" cellspacing="10">
+        <tr>
+          <td>
+        <label for="Items.Id">Item Id</label>
+      </td>
+   <td>
+  <input id="Items.Id" name="ItemId" type="text" dojoType="dijit.form.NumberTextBox" readonly/> </td>  </tr>   <tr><td>  <label for="ItemName">Name:</label></td><td> <input type="text" name="ItemName" id="ItemName"  dojoType="dijit.form.ValidationTextBox" trim="true"  uppercase="true" required="true" size="60" invalidMessage="You must enter the item's name"  style="width: 30em;" value=""/>
   </td> </tr>
  <tr>
- <td>  <div dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="item_categories/all"> </div>
-  <label for="Items.Categories">Category:</label> </td>
- <td> <input dojoType="dijit.form.FilteringSelect" required="true" store="categoryStore" invalidMessage="You must select the item's category"  searchAttr="name" name="Items.Categories" style="width:430px;"  id="Items.Categories" name="Items.Categories"/> </td>
+ <td>  <div dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="static/json/countries.json"> </div> 
+    <div dojoType="dojo.data.ItemFileReadStore"  jsId="supplierStore" url="http://172.16.0.10:6543/item_categories/all">  </div>
+ <label for="Items.Categories">Category:</label> </td>
+ <td> <input dojoType="dijit.form.FilteringSelect" required="true" store="supplierStore" invalidMessage="You must select the item's category"  searchAttr="name" name="Items.Categories" style="width:430px;"  id="Items.Categories" name="Items.Categories"/> </td>
  </tr>
- <tr>
-   <td><a href="${request.route_url('item_categories_all')}">Link</a>
-    <div dojoType="dojo.data.ItemFileReadStore"  jsId="supplierStore" url="item_categories/all">  </div>
-  </td>
-</tr>
 <tr>
- <td><label for="ItemUnitMeasurement">Measurement:</label> </td>
-  <td> <input type="text" name="ItemUnitMeasurement" id="ItemUnitMeasurement" size="11"
- dojoType="dijit.form.TextBox"  style="width:15em;"/>
+ <td><label for="ItemUnitMeasurement">Measurement:</label></td>
+  <td> <input type="text" name="ItemUnitMeasurement" id="ItemUnitMeasurement" dojoType="dijit.form.TextBox"  style="width:15em;"/>
   </td>
   </tr>
-  <tr>
-                                                <td>
-                                                       <label for="ItemUnitPrice">Unit Price (UGX):</label>
-                                                </td>
-                                                <td>
-                                                       <input dojoType="dijit.form.NumberTextBox" type="text" style="width:30em;"
-                                                            constraints="{fractional:true}" id="ItemUnitPrice" name="ItemUnitPrice">
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="ItemQuantity">Quantity:</label>
-                                                </td>
-                                                <td>
-                                                       <input dojoType="dijit.form.NumberTextBox" type="text" style="width:30em;"
-                                                              constraints="{fractional:true}" id="ItemQuantity" name="ItemQuantity" readonly>
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="ItemDescription">Description:</label>
-                                                </td>
-                                                <td>
-                                                    <input dojoType="dijit.form.TextBox" type="text" name="ItemDescription" id="ItemDescription"
-                                                       size="30"  style="width:30em;"/>
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                              <td><button dojoType="dijit.form.Button">Add Specifications</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" value="save" name="operationType">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </form>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;<br>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </table>
+<tr>
+ <td><label for="item_notes">Notes:</label></td>
+  <td> <input type="textarea" name="item_notes" id="item_notes" dojoType="dijit.form.SimpleTextarea" rows=5  style="width:100%;"/>
+  </td>
+  </tr>
+     <tr>
+        <td><button dojoType="dijit.form.Button">Add Specifications</button></td>
+     </tr>
+   </table>
+  </form>
+ </td>
+ <td></td>
+ </tr>
+ <tr>
+ </tr>
+ <tr><td align="center"></td></tr>
+ <tr> <td></td><td></td> </tr>
+ </tbody>
+</table>
+ </td>
+ </tr>
+ </table>
 </html>
 
 

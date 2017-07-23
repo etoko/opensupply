@@ -5,3 +5,4 @@ from .department import DepartmentController
 from .requisition import RequisitionController
 from .supplier import SupplierController
 from .item_category import ItemCategoryController
+from .item import ItemController
