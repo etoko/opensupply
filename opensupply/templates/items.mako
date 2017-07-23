@@ -141,24 +141,34 @@
                             </tr>
                             <tr>
                                 <td>
-    <form dojoType="dijit.form.Form" id="itemsForm" name="itemsForm" action="servlets/itemManager" method="post">
+    <form dojoType="dijit.form.Form" id="item_form" name="itemsForm" action="servlets/itemManager" method="post">
         <table border="0" cellspacing="10">
         <tr>
           <td>
-        <label for="Items.Id">Item Id</label>
+        <label for="item_id">Item Id</label>
       </td>
    <td>
-  <input id="Items.Id" name="ItemId" type="text" dojoType="dijit.form.NumberTextBox" readonly/> </td>  </tr>   <tr><td>  <label for="ItemName">Name:</label></td><td> <input type="text" name="ItemName" id="ItemName"  dojoType="dijit.form.ValidationTextBox" trim="true"  uppercase="true" required="true" size="60" invalidMessage="You must enter the item's name"  style="width: 30em;" value=""/>
-  </td> </tr>
- <tr>
- <td>  <div dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="static/json/countries.json"> </div> 
+     <input id="item_id" name="item_id" type="text" dojoType="dijit.form.NumberTextBox" readonly/> 
+      </td>  
+    </tr>   
+    <tr>
+        <td> <label for="item_name">Name:</label></td>
+        <td> <input type="text" name="item_name" id="item_name" dojoType="dijit.form.ValidationTextBox" trim="true"  uppercase="true" required="true" size="60" invalidMessage="You must enter the item's name"  style="width: 30em;" value=""/>
+       </td> 
+    </tr>
+    <tr>
+      <td> 
+        <div dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="static/json/countries.json"> </div> 
     <div dojoType="dojo.data.ItemFileReadStore"  jsId="supplierStore" url="http://172.16.0.10:6543/item_categories/all">  </div>
- <label for="Items.Categories">Category:</label> </td>
- <td> <input dojoType="dijit.form.FilteringSelect" required="true" store="supplierStore" invalidMessage="You must select the item's category"  searchAttr="name" name="Items.Categories" style="width:430px;"  id="Items.Categories" name="Items.Categories"/> </td>
- </tr>
-<tr>
- <td><label for="ItemUnitMeasurement">Measurement:</label></td>
-  <td> <input type="text" name="ItemUnitMeasurement" id="ItemUnitMeasurement" dojoType="dijit.form.TextBox"  style="width:15em;"/>
+        <label for="items_category">Category:</label> 
+      </td>
+      <td> 
+        <input dojoType="dijit.form.FilteringSelect" required="true" store="supplierStore" invalidMessage="You must select the item's category"  searchAttr="name" name="item_category" style="width:100%;"  id="item_category" name="item_category"/> 
+     </td>
+   </tr>
+   <tr>
+ <td><label for="item_unit_measurement">Measurement:</label></td>
+  <td> <input type="text" name="item_unit_measurement" id="item_unit_measurement" dojoType="dijit.form.TextBox"  style="width:15em;"/>
   </td>
   </tr>
 <tr>
