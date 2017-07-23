@@ -38,6 +38,7 @@ from .goods_received import GoodsReceivedNote
 from .goods_returned import GoodsReturnedNote, GoodsReturnedNote
 from .item import Item
 from .purchase_order import LocalPurchaseOrder, LocalPurchaseOrderItem
+from .item_category import ItemCategory
 
 class RootFactory(object):
     __acl__ = [ (Allow, Everyone, "view"), (Allow, "group:editors", "edit") ]
