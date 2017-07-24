@@ -45,7 +45,7 @@ class Item(Base):
         self.name = name
 
     def __repr__(self):
-        return "<Item: %d, %s>" % (self.id, self.name,)
+        return "<Item: %d, %s, %d>" % (self.id, self.name, self.category)
 
     @property
     def to_dict(self):
@@ -53,12 +53,12 @@ class Item(Base):
             "id":                  self.id,
             "name":                self.name,
             "unit_of_measurement": self.unit_of_measurement,
-            "category":            self.category.to_dict,
+            "category":            self.category,
             "vat_inclusive":       self.vat_inclusive,
             "created_by":          self.created_by,
-            "created_on":          self.created_on,
+           # "created_on":          self.created_on,
             "modified_by":         self.modified_by,
-            "modified_date":       self.modified_on
+           # "modified_date":       self.modified_on
         }
 
 
