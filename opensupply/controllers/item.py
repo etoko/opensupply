@@ -141,7 +141,7 @@ class ItemController(ApiController):
             """
             item = DBSession.query(Item).order_by(Item.id).first()
             
-            return self._to_json(item)
+            return item
 
 
         def _last():
@@ -150,7 +150,7 @@ class ItemController(ApiController):
             """ 
             item = DBSession.query(Item).\
                 order_by(desc(Item.id)).first()
-            return self._to_json(item)
+            return item
         
         def _all():
             items = DBSession.query(Item).all()
