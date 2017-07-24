@@ -66,37 +66,37 @@ function firstItem()
  */
 function previousItem()
 {
-    var position = dojo.cookie("currentitem");
+   // var position = dojo.cookie("currentitem");
 
-    if (position == undefined)
-        position = 0;
+    //if (position == undefined)
+  //      position = 0;
 
-    position = Math.abs(position);
-    position--;
+  //  position = Math.abs(position);
+  //  position--;
     
-    if (position < 0)
-    {
-        var message = dojo.byId("InformationMessage");
-        message.innerHTML = "You have reached the first item";
-        dijit.byId("InformationMessageDialog").show();
-        firstItem();
+  // / if (position < 0)
+  //  {
+  //      var message = dojo.byId("InformationMessage");
+  //      message.innerHTML = "You have reached the first item";
+  //      dijit.byId("InformationMessageDialog").show();
+  //      firstItem();
         
-        return;
-    }
+  //      return;
+ //   }
 
     dojo.xhrGet(
     {
-        url: "servlets/itemManager?operationType=previous&position=" + position,
-        handleAs: "text",
+        url: "/items/previous",
+        handleAs: "json",
+        form: "item_form",
         load: function(response)
         {
             var item = dojo.fromJson(response);
-
-            populateItemsControls(item, position);
+            populateItemsControls(item);
         },
         error: function(response)
         {
-            dojo.publish("/saving", [{message: "<font size='2'><b>...Failed " + response, type: "error", duration: 5000}]);
+            alert(response);
         }
     });
 }//End of function previousItem
@@ -106,43 +106,42 @@ function previousItem()
  */
 function nextItem()
 {
-      var position = dojo.cookie("currentitem");
-      var number = dojo.cookie("numberofitems");
+//      var position = dojo.cookie("currentitem");
+//      var number = dojo.cookie("numberofitems");
 
-      if (number == undefined)
-        number = 0;
+//      if (number == undefined)
+//        number = 0;
     
-      number = Math.abs(number);
+//      number = Math.abs(number);
       
-      if (position == undefined)
-          position = 0;
+//      if (position == undefined)
+//          position = 0;
 
-      position = Math.abs(position);
-      position++;
+//      position = Math.abs(position);
+//      position++;
 
-      if (position >= number)
-      {
-            var message = dojo.byId("InformationMessage");
-            message.innerHTML = "You have reached the last item";
-            dijit.byId("InformationMessageDialog").show();
-            lastItem();
+//      if (position >= number)
+//      {
+//            var message = dojo.byId("InformationMessage");
+//            message.innerHTML = "You have reached the last item";
+//            dijit.byId("InformationMessageDialog").show();
+//            lastItem();
             
-            return;
-      }
-
+//            return;
+//      }
       dojo.xhrGet(
       {
-            url: "servlets/itemManager?operationType=next&position=" + position,
-            handleAs: "text",
+            url: "/items/next",
+            handleAs: "json",
+            form: "item_form",
             load: function(response)
             {
                 var item = dojo.fromJson(response);
-
                 populateItemsControls(item, position);
             },
             error: function(response)
             {
-                dojo.publish("/saving", [{message: "<font size='2'><b>...Failed " + response, type: "error", duration: 5000}]);
+                alert(response);
             }
         });
 }//End of function nextItem
@@ -152,21 +151,18 @@ function nextItem()
  */
 function lastItem()
 {
-    var position = 0;
-
     dojo.xhrGet(
     {
-        url: "servlets/itemManager?operationType=last",
-        handleAs: "text",
+        url: "items/last",
+        handleAs: "json",
         load: function(response)
         {
             var item = dojo.fromJson(response);
-            position = Math.abs(item.size);
-            populateItemsControls(item, (position - 1));
+            populateItemsControls(item);
         },
         error: function(response)
         {
-            dojo.publish("/saving", [{message: "<font size='2'><b>...Failed " + response, type: "error", duration: 5000}]);
+            alert(response);
         }
     });
 }//End of function lastItem
@@ -300,11 +296,13 @@ function populateItemsControls(item)
 
     var itemId = dojo.byId("item_id");
     var itemName = dojo.byId("item_name");
+    var itemCategory = dijit.byId("item_category");
     var itemUnitMeasurement = dojo.byId("item_unit_measurement");
     var itemNotes = dojo.byId("item_notes");
 
     itemId.value = item.id;
     itemName.value = item.name;
+    itemCategory.set("value", item.category);
     itemUnitMeasurement.value = item.measurement;
     itemNotes.value = item.notes;
 
