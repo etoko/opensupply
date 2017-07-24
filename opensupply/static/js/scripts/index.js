@@ -44,7 +44,7 @@ function first()
         firstSupplier();
     else if (selected_tab == "Item Categories")
         firstItemCategory();
-    else if (selected_tab == "Item")
+    else if (selected_tab == "Items")
         firstItem();
 }
 
