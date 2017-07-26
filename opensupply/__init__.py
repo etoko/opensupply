@@ -100,6 +100,16 @@ def main(global_config, **settings):
     config.add_route("item_categories_delete", "item_categories/delete")
     config.add_route("item_categories_all", "item_categories/all")
 
+    #Requisitions
+    config.add_route("requisitions_page", "/requisitions/")
+    config.add_route("requisitions_save", "/requisitions/save")
+    config.add_route("requisitions_first", "/requisitions/first")
+    config.add_route("requisitions_last", "/requisitions/last")
+    config.add_route("requisitions_next", "/requisitions/next")
+    config.add_route("requisitions_previous", "/requisitions/previous")
+    config.add_route("requisitions_delete", "requisitions/delete")
+    config.add_route("requisitions_all", "requisitions/all")
+
 
     #######controller operations###############################################
     config.add_route('supplier_controller', '/supplier/operations')
