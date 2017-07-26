@@ -83,9 +83,9 @@ class ItemController(ApiController):
                 item.unit_of_measurement = unit_of_measurement
                 item.created_by = user
                 item.modified_by = user
-                j_item = DBSession.add(item)
-                j_item = self.get(LAST=True)
-                return j_item
+                DBSession.add(item)
+                #j_item = self.get(LAST=True)
+                #return j_item
                 #region_invalidate(_all, "hour")
       
         def _update():
