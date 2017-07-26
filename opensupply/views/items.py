@@ -116,7 +116,6 @@ def item_last(request):
     """
     item = item_controller.get(LAST=True)
     
-    print(json.dumps(item.to_dict))
     return json.dumps(item.to_dict)
 
 
