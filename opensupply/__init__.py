@@ -47,7 +47,6 @@ def main(global_config, **settings):
 
     #procurement
     config.add_route('purchase_orders_page', '/purchase_orders/')
-    config.add_route('requisitions_page', '/requisitions/')
     config.add_route('departments_page', '/departments/')
     config.add_route('suppliers_page', '/suppliers/')
     config.add_route('store_issues_page', '/store_issues/')	
