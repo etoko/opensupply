@@ -23,7 +23,7 @@ from pyramid.security import (
   Everyone,
   )
 
-from .meta import Base
+from .meta import Base, DBSession
 
 class Requisition(Base):
 
@@ -64,6 +64,14 @@ class Requisition(Base):
           "requisition_items": \
             [item.to_dict for item in self.requisition_items]
           }
+
+    def next(self):
+        return DBSession.query(Requisition).filter(Requisition.id > self.id).\
+            order_by(Requisition.id).first()
+
+    def previous(self):
+        return DBSession.query(Requisition).filter(Requisition.id < self.id).\
+            order_by(desc(Requisition.id)).first()
 
 
 class RequisitionItem(Base):
