@@ -44,9 +44,8 @@ def item_first(request):
     View to navigate to the first item
     """
     item = item_controller.get(FIRST=True)
-    print(item)
 
-    return item
+    return json.dumps(item.to_dict)
 
 @view_config(route_name="items_previous", renderer="json")
 def item_previous(request):
@@ -59,9 +58,26 @@ def item_previous(request):
 #    item = item_controller.get(item_id)
 
     item_id = request.params["item_id"]
-    item_id = int(item_id)
+    print("ITEM ID:"+ item_id)
+    
+    try:
+        item_id = int(item_id)
+    except ValueError as v_error:
+        item = item_controller.get(LAST=True)
+        j_item = json.dumps(item.to_dict)
+
+        return j_item
+    except AttributeError as a_error:
+        #We are at the first item
+        raise RuntimeError("Reached first item")
+    except RuntimeError as r_error:
+        #We have probably reached last item
+        raise RuntimeError("Reached first item")
+
     item = item_controller.get(item_id)
     item = item.previous()
+    if item is None:
+        return None
     j_item = json.dumps(item.to_dict)
 
     return j_item
@@ -73,8 +89,19 @@ def item_next(request):
     Navigate to previous item
     """
     item_id = request.params["item_id"]
-    item_id = int(item_id)
-    #item_id = item_id + 1
+    print("ITEM ID IS: " + item_id)
+    
+    try:
+        item_id = int(item_id)
+    except ValueError as v_error:
+        item = item_controller.get(FIRST=True)
+        j_item = json.dumps(item.to_dict)
+
+        return j_item
+    except RuntimeError as err:
+        #We have probably reached last item
+        raise RuntimeError(err)
+
     item = item_controller.get(item_id)
     item = item.next()
     j_item = json.dumps(item.to_dict)
@@ -89,7 +116,8 @@ def item_last(request):
     """
     item = item_controller.get(LAST=True)
     
-    return item
+    print(json.dumps(item.to_dict))
+    return json.dumps(item.to_dict)
 
 
 @view_config(route_name="items_save", renderer="json")
@@ -114,8 +142,9 @@ def item_save(request):
     }
 
     item = item_controller.save(j_item)
+    item = item_controller.get(LAST=True)
     
-    return item
+    return json.dumps(item.to_dict)
 
 @view_config(route_name="items_delete", renderer="json")
 def item_delete(request):
