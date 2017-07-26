@@ -14,6 +14,8 @@ from sqlalchemy import (
     Table,
     UniqueConstraint,
     )
+
+from sqlalchemy import desc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref, column_property
 
@@ -23,7 +25,8 @@ from pyramid.security import (
   Everyone,
   )
 
-from .meta import Base
+from .meta import Base, DBSession
+
 
 class Item(Base):
 
@@ -46,6 +49,14 @@ class Item(Base):
 
     def __repr__(self):
         return "<Item: %d, %s, %d>" % (self.id, self.name, self.category)
+
+    def next(self):
+        return DBSession.query(Item).filter(Item.id > self.id).\
+            order_by(Item.id).first()
+
+    def previous(self):
+        return DBSession.query(Item).filter(Item.id < self.id).\
+            order_by(desc(Item.id)).first()
 
     @property
     def to_dict(self):
