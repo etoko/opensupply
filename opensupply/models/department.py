@@ -55,10 +55,10 @@ class Department(Base):
         return {
             "id":          self.id,
             "name":        self.name,
-            "created_by":  self.created_by,
-            "created_on":  self.created_on,
-            "modified_by": self.modified_by,
-            "modified_on": self.modified_on
+         #   "created_by":  self.created_by,
+         #   "created_on":  self.created_on,
+         #   "modified_by": self.modified_by,
+        #    "modified_on": self.modified_on
         }
 
 class DepartmentItemCategory(Base):
