@@ -106,8 +106,9 @@ class DepartmentController(ApiController):
                  return self._to_json(DBSession.query(Department).order_by( \
                      desc(Department.id)).first())
         elif not len(args) and not len(kwargs):
-            return DBSession.query(Department).\
-              filter(Department.voided == False).all()
+            #return DBSession.query(Department).\
+            #  filter(Department.voided == False).all()
+            return DBSession.query(Department).all()
 
         return False
 #            print("Department is: ", department_id)
