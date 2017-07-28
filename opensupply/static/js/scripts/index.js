@@ -31,6 +31,8 @@ function newValue()
         newItemCategory();
     else if (selected_tab == "Items")
         newItem();
+    else if (selected_tab == "Requisitions")
+        newRequisition();
 }
 
 function first()
@@ -46,6 +48,8 @@ function first()
         firstItemCategory();
     else if (selected_tab == "Items")
         firstItem();
+    else if (selected_tab == "Requisitions")
+        firstRequisition();
 }
 
 function previous()
@@ -61,6 +65,8 @@ function previous()
         previousItemCategory();
     else if (selected_tab == "Items")
         previousItem();
+    else if (selected_tab == "Requisitions")
+        previousRequisition()
 }
 
 function next()
@@ -76,6 +82,8 @@ function next()
         nextItemCategory();
     else if (selected_tab == "Items")
         nextItem();
+    else if (selected_tab == "Requisitions")
+        nextRequisition()
 }
 
 function last()
@@ -91,6 +99,8 @@ function last()
         lastItemCategory();
     else if (selected_tab == "Items")
         lastItem();
+    else if (selected_tab == "Requisitions")
+        lastRequisition()
 }
 
 function save()
@@ -106,6 +116,8 @@ function save()
         saveItemCategory();
     else if (selected_tab == "Items")
         saveItem();
+    else if (selected_tab == "Requisitions")
+        saveRequisition()
 }//End save function
 
 function delete_operation()
@@ -124,6 +136,8 @@ function delete_operation()
         deleteItemCategory();
     else if (selected_tab == "Items")
         deleteItem();
+    else if (selected_tab == "Requisitions")
+        deleteRequisition()
 }
 
 /**
