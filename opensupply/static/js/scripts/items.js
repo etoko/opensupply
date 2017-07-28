@@ -96,7 +96,7 @@ function previousItem()
         },
         error: function(response)
         {
-            alert(response);
+            alert(response.status);
         }
     });
 }//End of function previousItem
@@ -129,6 +129,9 @@ function nextItem()
             
 //            return;
 //      }
+      //alert(dijit.byId("item_id").get("value"));
+      //return;
+
       dojo.xhrGet(
       {
             url: "/items/next",
@@ -137,7 +140,7 @@ function nextItem()
             load: function(response)
             {
                 var item = dojo.fromJson(response);
-                populateItemsControls(item, position);
+                populateItemsControls(item);
             },
             error: function(response)
             {
