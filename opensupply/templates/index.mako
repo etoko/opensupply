@@ -169,6 +169,7 @@
     <script type="text/javascript" src="static/js/scripts/departments.js"></script>
     <script type="text/javascript" src="static/js/scripts/items.js"></script>
     <script type="text/javascript" src="static/js/scripts/item_categories.js"></script>
+    <script type="text/javascript" src="static/js/scripts/requisitions.js"></script>
 
 
   </head>
