@@ -230,7 +230,14 @@ def department_last(request):
 
 @view_config(route_name="department_all", renderer="json")
 def department_all(request):
-    return department_controller.get()
+    departments = department_controller.get()
+    department_all = []
+
+    for department in departments:
+        department_all.append(department.to_dict)
+    
+    print(departments)
+    return {"identifier": "id", "label": "name", "items":department_all}
 
 #######Admin##########################
 @view_config(route_name = "user_controller", renderer = "json")
