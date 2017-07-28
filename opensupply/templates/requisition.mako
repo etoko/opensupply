@@ -75,7 +75,7 @@
                                         </script>
                                         <thead>
                                            <tr>
-                                              <th field="lpoId" width="60px" editable="false">LPO #</th>
+                                              <th field="lpoId" width="60px" editable="false">Department #</th>
                                               <th field="supplier" width="330px" editable="false">Supplier</th>
                                               <th field="orderDate" width="90px" editable="false">Order Date</th>
                                               <th field="deliveryDate" width="90px" editable="false">Delivery Date</th>
@@ -171,6 +171,15 @@
                                         id="requisitionReceivedDate" name="requisitionReceivedDate">
                                     </td>
                                 </tr>
+    <tr>
+      <td> 
+    <div dojoType="dojo.data.ItemFileReadStore"  jsId="supplierStore" url="http://172.16.0.10:6543/department/all">  </div>
+        <label for="requisitions_department">Department:</label> 
+      </td>
+      <td> 
+        <input dojoType="dijit.form.FilteringSelect" required="true" store="supplierStore" invalidMessage="You must select the requisition's department"  searchAttr="name" name="requisition_department" style="width:100%;"  id="requisition_department" name="requisition_department"/> 
+     </td>
+   </tr>
                                 <tr>
                                     <td><label for="requisitionInvoiceNo">Invoice #:</label></td>
                                     <td>
