@@ -1,6 +1,12 @@
+__author__ = "Emmanuel TOKO"
+
+import transaction
+
 from opensupply.models import DBSession, Requisition
 
 from opensupply.controllers import ApiController
+
+from sqlalchemy import desc
 from sqlalchemy.types import Boolean
 
 class RequisitionController(ApiController):
@@ -58,15 +64,17 @@ class RequisitionController(ApiController):
         return requisition
         
     def save(self, j_requisition):
-        _set_attributes()
-        if self.id == -1:
-            _create()
-        else:
-            _update()
+        #_set_attributes()
+        requisition_id = j_requisition["requisition_id"]
+        department_id = j_requisition["department_id"]
+        expected_date = j_requisition["expected_date"]
+        
 
         def _create():
             requisition = Requisition()
-            requisition = _set_requisition(requisition)
+            #requisition = _set_requisition(requisition)
+            requisition.department = department_id
+            requisition.expected_date = expected_date
 
             with transaction.manager:
                 DBSession.add(requisition)
@@ -75,17 +83,70 @@ class RequisitionController(ApiController):
         def _update():
             with transaction.manager:
                 requisition = DBSession.get(requisition.id)
-                requisition = _set_requisition(requisition)
+                #requisition = _set_requisition(requisition)
+                requisition.department = department_id
+                requisition.expected_date = expected_date
                 DBSession.merge(requisition)
                 transaction.commit()
+        
 
-    def get(self, **kwargs):
         try:
-            id = kwargs.pop("requisition.id")
-            with transaction.manager:
-                return DBSession.query(Requisition).get(id).first()
-        except KeyError as err:
-            return DBSession.query(Requisition).filter(voided = False)
+            requisition_id = int(requisition_id)
+            
+            if (requisition_id == -1) or (requisition_id == 0):
+                _create()
+                return self.get(LAST=True)
+            else:
+                _update()
+        except ValueError as v_error:
+            #user did not click new button
+            _create()
+
+
+    def get(self, *args, **kwargs):
+        """
+        Retrieve a specific Requisition model that matches specific criteria 
+        i.e. id value submitted a list of requisitions
+        """
+
+        def __first():
+            requisition = DBSession.query(Requisition).order_by(\
+                Requisition.id).first()
+
+            return requisition
+
+        def __last():
+            requisition = DBSession.query(Requisition).order_by(\
+                desc(Requisition.id)).first()
+
+            return requisition
+
+
+        if args:
+            #if requisition id has been submitted as parameter
+            # return Requisition model that matches the id
+            try:
+                requisition_id = int(args[0])
+                requisition = DBSession.query(Requisition).get(requisition_id)
+
+                return requisition
+            except ValueError as v_error:
+                raise v_error
+                #TODO better exception handling
+
+        elif kwargs:
+            if "FIRST" in kwargs:
+                return __first()
+            elif "LAST" in kwargs:
+                return __last()
+        else: #return all requisitions
+            requistions = DBSession.query(Requisition).order_by(\
+                Requisition.id).all()
+            
+            return requisitions
+
+        return None
+
 
     def delete(self, requisition_id):
         requisition = get(requisition_id)
