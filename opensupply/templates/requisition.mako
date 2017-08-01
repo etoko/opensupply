@@ -163,7 +163,7 @@
                                             </script>
      </button>
     </td>
-    <td align="right"><label for="requisition_expected_date">Date:</label></td>
+    <td align="right"><label for="requisition_expected_date">Expected Date:</label></td>
     <td> <input dojoType="dijit.form.DateTextBox" type="text" constraints="{datePattern:'dd-MMM-yyyy'}" required="true" id="requisition_expected_date" name="requisition_expected_date"> </td>
  </tr>
     <tr>
