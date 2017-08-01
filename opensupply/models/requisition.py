@@ -14,6 +14,7 @@ from sqlalchemy import (
     Table,
     UniqueConstraint,
     )
+from sqlalchemy import desc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref, column_property
 
@@ -49,18 +50,18 @@ class Requisition(Base):
     def to_dict(self):
         return {
           "id": self.id,
-          "request_date":      self.request_date,
-          "expected_date":     self.expected_date,
+          #"request_date":      self.request_date,
+          "expected_date":     self.expected_date.__str__(),
           "department":        self.department,
           "requested_by":      self.requested_by,
           "recommended_by":    self.recommended_by,
-          "recommended_date":  self.recommended_date,
+          "recommended_date":  self.recommended_date.__str__(),
           "approved_by":       self.approved_by,
-          "approved_date":     self.approved_date,
+          "approved_date":     self.approved_date.__str__(),
           "created_by":        self.created_by,
-          "created_date":      self.created_date,
+          "created_date":      self.created_date.__str__(),
           "modified_by":       self.modified_by,
-          "modified_date":     self.modified_date,
+          "modified_date":     self.modified_date.__str__(),
           "requisition_items": \
             [item.to_dict for item in self.requisition_items]
           }
