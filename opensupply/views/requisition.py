@@ -41,9 +41,8 @@ def requisition_first(request):
     View to navigate to the first requisition
     """
     requisition = requisition_controller.get(FIRST=True)
-    print(requisition)
 
-    return requisition
+    return requisition.to_dict
 
 @view_config(route_name="requisitions_previous", renderer="json")
 def requisition_previous(request):
@@ -55,13 +54,15 @@ def requisition_previous(request):
 #    requisition_id = requisition_id - 1
 #    requisition = requisition_controller.get(requisition_id)
 
+    #requisition_id = request.params["requisition_id"]
+    #requisition_id = int(requisition_id)
+    #requisition = requisition_controller.get(requisition_id)
+    #requisition = requisition.previous()
+    #j_requisition = json.dumps(requisition.to_dict)
     requisition_id = request.params["requisition_id"]
-    requisition_id = int(requisition_id)
     requisition = requisition_controller.get(requisition_id)
     requisition = requisition.previous()
-    j_requisition = json.dumps(requisition.to_dict)
-
-    return j_requisition
+    return requisition.to_dict
 
 
 @view_config(route_name="requisitions_next", renderer="json")
@@ -69,14 +70,19 @@ def requisition_next(request):
     """
     Navigate to previous requisition
     """
-    requisition_id = request.params["requisition_id"]
-    requisition_id = int(requisition_id)
+    #requisition_id = request.params["requisition_id"]
+    #requisition_id = int(requisition_id)
     #requisition_id = requisition_id + 1
+    #requisition = requisition_controller.get(requisition_id)
+    #requisition = requisition.next()
+    #j_requisition = json.dumps(requisition.to_dict)
+
+    #return j_requisition
+    requisition_id = request.params["requisition_id"]
     requisition = requisition_controller.get(requisition_id)
     requisition = requisition.next()
-    j_requisition = json.dumps(requisition.to_dict)
-
-    return j_requisition
+    
+    return requisition.to_dict
 
 
 @view_config(route_name="requisitions_last", renderer="json")
@@ -86,7 +92,7 @@ def requisition_last(request):
     """
     requisition = requisition_controller.get(LAST=True)
     
-    return requisition
+    return requisition.to_dict
 
 
 @view_config(route_name="requisitions_save", renderer="json")
@@ -94,32 +100,21 @@ def requisition_save(request):
     """
     Called after user clicks save button
     """
-    j_requisition = None
-    requisition_id  = request.params['requisition_id']  
-    name  = request.params['requisition_name']
-    tel_1 = request.params['requisition_tel_1']
-    tel_2 = request.params['requisition_tel_2']
-    email = request.params['requisition_email']
-    website = request.params["requisition_website"]
-    fax   = request.params['requisition_fax']
-    address = request.params['requisition_address']
-    notes   = request.params['requisition_notes']
+    j_requisition = {}
+    requisition_id  = request.params['requisition_id']
+    department_id = request.params["requisition_department"]
+    expected_date = request.params["requisition_expected_date"]
     
     j_requisition = {
-        'id'  : requisition_id,
-        'name':  name,
-        'tel_1': tel_1,
-        'tel_2': tel_2,
-        'email': email,
-        "website": website,
-        'fax': fax,
-        'address': address,
-        'notes': notes 
+        'requisition_id'  : requisition_id,
+        'department_id':  department_id,
+        'expected_date': expected_date,
+        #'notes': notes 
     }
 
     requisition = requisition_controller.save(j_requisition)
     
-    return requisition
+    return requisition.to_dict
 
 @view_config(route_name="requisitions_delete", renderer="json")
 def requisition_delete(request):
