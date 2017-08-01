@@ -9,7 +9,7 @@
  * Function creates an environment suitable for addition of a new requisition
  *
  */
-function newDepartment()
+function newRequisition()
 {
     //alert("Clicked First!");
     var id = dijit.byId("requisition_id");
@@ -19,19 +19,18 @@ function newDepartment()
     id.setValue(-1);
     name.setValue("");
     notes.setValue("");
-} //End of function addDepartment
+} //End of function addRequisition
 
 /**
  *Function saves a new deparment or updates an existing requisition
  *
  */
-function requisition_save()
+function saveRequisition()
 {
     //var formToValidate = dojo.byId("requisition_form");
     //if (formToValidate.validate())
     //{
         //dojo.publish("/saving", [{message: "<font size='2'><b>Saving...", type: "info", duration: 15000}]);
-
         dojo.xhrGet(
         {
             form: "requisition_form",
@@ -40,12 +39,12 @@ function requisition_save()
             load: function(response)
             {
                 //dojo.publish("/saved", [{message: "<font size='2'><b>...Saved", type: "info", duration: 15000}]);
-                //var requisition = dojo.fromJson(response);
+                var requisition = dojo.fromJson(response);
 //                informationMessage("Successfully Saved");  
-                //populateDepartmentControls(requisition);
-    dojo.byId("InformationMessage").innerHTML = "Sucess "+ response;
-   dijit.byId("InformationMessageDialog").show();
-                
+                populateRequisitionControls(requisition);
+                //dojo.byId("InformationMessage").innerHTML = "Sucess "+ response;
+                //  dijit.byId("InformationMessageDialog").show();
+                //alert(response);
             },
             error: function(response)
             {
@@ -72,7 +71,7 @@ function requisition_save()
 /**
  * Function navigates to the first requisition
  */
-function firstDepartment()
+function firstRequisition()
 {
     dojo.xhrGet(
     {
@@ -81,7 +80,7 @@ function firstDepartment()
         {
             var requisition = dojo.fromJson(response);
 
-            populateDepartmentControls(requisition);
+            populateRequisitionControls(requisition);
         },
         error: function(response)
         {
@@ -93,12 +92,12 @@ function firstDepartment()
 /**
  * Function navigates to the previous requisition
  */
-function previousDepartment()
+function previousRequisition()
 {
     id = dijit.byId("requisition_id").attr('value');
     if (id == "")
     {  
-        firstDepartment();
+        firstRequisition();
         return;
     }
 
@@ -110,24 +109,24 @@ function previousDepartment()
         load: function(response)
         {
             var requisition = dojo.fromJson(response);
-            populateDepartmentControls(requisition);
+            populateRequisitionControls(requisition);
         },
         error: function(response)
         {
             alert(response);
         }
     });
-} //End of function previousDepartment
+} //End of function previousRequisition
 
 /**
  * Function navigates to the next requisition
  */
-function nextDepartment()
+function nextRequisition()
 {
     id = dijit.byId("requisition_id").attr('value');
     if (id == "")
     {  
-        firstDepartment();
+        firstRequisition();
         return;
     }
 
@@ -139,19 +138,19 @@ function nextDepartment()
         load: function(response)
         {
             var requisition = dojo.fromJson(response);
-            populateDepartmentControls(requisition);
+            populateRequisitionControls(requisition);
         },
         error: function(response)
         {
             alert(response);
         }
     });
-} //End of function nextDepartment
+} //End of function nextRequisition
 
 /**
  * Function navigates to the last requisition
  */
-function lastDepartment()
+function lastRequisition()
 {
     dojo.xhrGet(
     {
@@ -160,7 +159,7 @@ function lastDepartment()
         load: function(response)
         {
             var requisition = dojo.fromJson(response);
-            populateDepartmentControls(requisition);
+            populateRequisitionControls(requisition);
         },
         error: function(response)
         {
@@ -169,7 +168,7 @@ function lastDepartment()
     });
 } //End of function last
 
-function populateDepartmentControls(requisition)
+function populateRequisitionControls(requisition)
 {
     //var requisitionName = requisition.name;
 
@@ -182,13 +181,14 @@ function populateDepartmentControls(requisition)
     //}
 
     var id = dijit.byId("requisition_id");
-    var name = dijit.byId("requisition_name");
-    //var type = dijit.byId("requisition_type");
-    var notes = dijit.byId("requisition_notes");
+    var department = dijit.byId("requisition_department");
+    var expectedd_date = dijit.byId("requisition_expected_date");
+    var expected_date = dojo.byId("requisition_expected_date");
 
-    id.setValue(requisition.id);
-    name.setValue(requisition.name);
+    id.set("value", requisition.id);
+    department.set("value", requisition.department);
+    expected_date.value=requisition.expected_date;
     //type.setValue(requisition.type);
-    notes.setValue(requisition.notes);
-} //End of function populateDepartmentControls
+    //notes.setValue(requisition.notes);
+} //End of function populateRequisitionControls
 
