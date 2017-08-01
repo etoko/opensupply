@@ -1,21 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal">
     
-<head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Requisition</title>
-    </head>
-    <body class="tundra">
-        <table cellspacing="0" cellpadding="0" width="100%" border="0">
-            <tr>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-        <table border="0" width="100%">
-            <tr>
-                <td>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Requisition</title>
+  </head>
+  <body class="tundra">
+    <table cellspacing="0" cellpadding="0" width="100%" border="0">
+      <tr>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table border="0" width="100%">
+           <tr>
+             <td>
                     <div id="requisitionDeleteDialog" dojoType="dijit.Dialog" title="Confirm Deletion" style="width: 330px;">
                         <table align="center">
                              <tr align="center">
@@ -137,8 +137,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <form dojoType="dijit.form.Form" id="requisitionForm" name="requisitionForm"
-                        action="servlets/itemManager" method="post">
+                        <form dojoType="dijit.form.Form" id="requisition_form" name="requisition_form" method="post">
                             <table cellspacing="5" border="0">
                                 <tr>
                                     <td>
@@ -146,9 +145,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><label for="requisitionNo">Requisition #:</label></td>
+                                    <td><label for="requisition_id">Requisition #:</label></td>
                                     <td colspan="3">
-                                        <input id="requisitionNo" dojoType="dijit.form.NumberTextBox" style=" color:black;" disabled/>
+                                        <input name="requisition_id" id="requisition_id" dojoType="dijit.form.TextBox"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -162,15 +161,11 @@
                                             <script type="dojo/method" event="onClick" args="evt">
                                                 dijit.byId("RequisitionPendingLPOs").show();
                                             </script>
-                                        </button>
-                                    </td>
-                                    <td align="right"><label for="requisitionReceivedDate">Date:</label></td>
-                                    <td>
-                                        <input dojoType="dijit.form.DateTextBox" type="text"
-                                            constraints="{datePattern:'dd-MMM-yyyy'}" required="true"
-                                        id="requisitionReceivedDate" name="requisitionReceivedDate">
-                                    </td>
-                                </tr>
+     </button>
+    </td>
+    <td align="right"><label for="requisition_expected_date">Date:</label></td>
+    <td> <input dojoType="dijit.form.DateTextBox" type="text" constraints="{datePattern:'dd-MMM-yyyy'}" required="true" id="requisition_expected_date" name="requisition_expected_date"> </td>
+ </tr>
     <tr>
       <td> 
     <div dojoType="dojo.data.ItemFileReadStore"  jsId="supplierStore" url="http://172.16.0.10:6543/department/all">  </div>
